@@ -8,7 +8,8 @@
     "build": "tsc -b packages/core",
     "test": "vitest run",
     "pipeline": "node skills/reconstruct-value-stream/run-pipeline.mjs",
-    "demo": "node skills/reconstruct-value-stream/run-pipeline.mjs --vertical saas-implementation --sources examples/synthetic-saas --out out"
+    "demo": "node skills/reconstruct-value-stream/run-pipeline.mjs --vertical saas-implementation --sources examples/synthetic-saas --out out",
+    "dashboard": "node packages/dashboard/serve.mjs"
   },
   "dependencies": {
     "@throughline/core": "workspace:*"

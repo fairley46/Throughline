@@ -72,11 +72,32 @@ throughline/
           reconcile.test.ts    # OVER-MERGE GUARD regression test (the required one)
           diagnostics.test.ts
     dashboard/                 # the render (analogue of UA packages/dashboard)
-      render.mjs               # model-first HTML generator: EVENT + STAGE views,
-                               #   stage legend, drill-down, visible confidence/gap layer
-      template.mjs             # HTML/CSS/JS string templates (self-contained per stage)
+      views.mjs                # SHARED, environment-agnostic view builders (one source
+                               #   of truth). Pure (model)->html string fns: LEDGER, STAGE,
+                               #   SERVICE, GAPS, EVENT + the stage/journey DRILL-DOWN
+                               #   builders, the shared STYLE, and CLIENT_SCRIPT (tab
+                               #   switching + click-through). No node/DOM/fetch APIs, so
+                               #   it renders server-side for the static file AND is shipped
+                               #   verbatim to the browser for the served dashboard.
+      render.mjs               # STATIC generator: builds out/index.html from views.mjs and
+                               #   embeds the model + drill builders so click-through works
+                               #   offline. The portable artifact (no server, no build).
+      template.mjs             # the static page shell (wires views.mjs STYLE/CLIENT_SCRIPT
+                               #   + embedded model into one self-contained HTML file).
+      serve.mjs                # SERVED dashboard: token-gated localhost server (analogue of
+                               #   UA's understand-dashboard Vite server). Binds 127.0.0.1,
+                               #   prints `🔑 Dashboard URL: http://127.0.0.1:<PORT>/?token=`,
+                               #   gates /model.json behind ?token= (403 without). Serves a
+                               #   shell that fetches the model and renders the SAME views.mjs
+                               #   builders client-side. Zero runtime deps (node:http+crypto).
+                               #   `npm run dashboard` (default out/model.json, port 4317;
+                               #   --model/--port or MODEL_PATH/PORT env to override).
 
   skills/
+    value-stream-dashboard/
+      SKILL.md                 # launch path mirroring UA's understand-dashboard: start the
+                               #   token-gated server and report the tokenized URL. The served
+                               #   counterpart to the portable static out/index.html.
     reconstruct-value-stream/
       SKILL.md                 # the orchestrator: phases mirroring UA's phase model
       detect-join-candidates.mjs   # DETERMINISTIC, no LLM. Our analogue of
