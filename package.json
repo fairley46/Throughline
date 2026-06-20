@@ -10,6 +10,9 @@
     "pipeline": "node skills/reconstruct-value-stream/run-pipeline.mjs",
     "demo": "node skills/reconstruct-value-stream/run-pipeline.mjs --vertical saas-implementation --sources examples/synthetic-saas --out out"
   },
+  "dependencies": {
+    "@throughline/core": "workspace:*"
+  },
   "devDependencies": {
     "@types/node": "^22.0.0",
     "typescript": "^5.7.0",
