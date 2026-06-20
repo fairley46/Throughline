@@ -1,4 +1,4 @@
-# throughline *(working name — naming pass owed)*
+# Throughline
 
 Ingest an assortment of business data from different sources and shapes, reconstruct the
 end-to-end value stream (purchase → logistics → sales → implementation → support → retention),
@@ -19,4 +19,7 @@ seam nobody owns. That reconciliation is the product.
 
 ## Status
 
-Pre-build. Reconciliation design locked; build brief next.
+**v1** (`v1.0.0`). Both model axes (value stream + service architecture), the reconciliation
+engine with the over-merge guard, the seven LLM agents + `SKILL.md`, and the model-first HTML
+render are in place. Build + tests + demo pass. Pressure-test datasets (dentist → SMB →
+enterprise) are the next step.
