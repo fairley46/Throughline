@@ -1,0 +1,18 @@
+{
+  "name": "throughline",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Reconstruct an end-to-end business value stream from multi-source data and render it (working name).",
+  "scripts": {
+    "build": "tsc -b packages/core",
+    "test": "vitest run",
+    "pipeline": "node skills/reconstruct-value-stream/run-pipeline.mjs",
+    "demo": "node skills/reconstruct-value-stream/run-pipeline.mjs --vertical saas-implementation --sources examples/synthetic-saas --out out"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.1.0"
+  }
+}
