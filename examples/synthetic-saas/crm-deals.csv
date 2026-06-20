@@ -1,0 +1,5 @@
+deal_id,company,contact_email,owner,amount,deal_created_at,event
+4471,Acme Corp,john@acme.com,Dana Reyes,24000,2025-01-05T09:00:00Z,deal_created
+5500,Acme Corp,john@acme.com,Dana Reyes,31000,2025-06-05T10:00:00Z,deal_created
+6610,Globex LLC,mara@globex.io,Sam Patel,18000,2025-02-11T14:00:00Z,deal_created
+7200,Initech Inc,bill@initech.com,Dana Reyes,52000,2025-03-02T11:00:00Z,deal_created

@@ -1,0 +1,26 @@
+{
+  "id": "vehicle-service-bay",
+  "label": "Vehicle Service Bay Flow",
+  "defaultUnit": "repair_order",
+  "stages": [
+    { "id": "intake", "label": "Check-in / Intake", "color": "#2563eb", "order": 0, "events": ["vehicle_checked_in", "appointment_arrived"] },
+    { "id": "diagnosis", "label": "Diagnosis / Estimate", "color": "#7c3aed", "order": 1, "events": ["diagnosis_started", "estimate_created", "estimate_approved"] },
+    { "id": "parts", "label": "Parts / Procurement", "color": "#0891b2", "order": 2, "events": ["parts_ordered", "parts_received"] },
+    { "id": "service", "label": "Service / Bay work", "color": "#16a34a", "order": 3, "events": ["work_started", "work_completed"] },
+    { "id": "qc", "label": "Quality check", "color": "#d97706", "order": 4, "events": ["qc_passed", "qc_failed"] },
+    { "id": "checkout", "label": "Invoice / Checkout", "color": "#dc2626", "order": 5, "events": ["invoice_issued", "vehicle_picked_up", "payment_received"] }
+  ],
+  "cardinality": [
+    { "from": "intake", "to": "diagnosis", "max": 1, "expected": true },
+    { "from": "intake", "to": "checkout", "max": 1, "expected": true },
+    { "from": "diagnosis", "to": "parts", "max": "many", "expected": false },
+    { "from": "diagnosis", "to": "service", "max": 1, "expected": true },
+    { "from": "service", "to": "qc", "max": 1, "expected": false }
+  ],
+  "joinKeys": [
+    { "key": "repair_order", "aliases": ["repair_order", "ro_number", "ro", "work_order", "wo"] },
+    { "key": "vin", "aliases": ["vin", "vehicle_id"] },
+    { "key": "invoice_id", "aliases": ["invoice_id", "invoice", "invoice_no"] },
+    { "key": "customer", "aliases": ["customer", "customer_name", "owner", "phone"] }
+  ]
+}

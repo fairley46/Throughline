@@ -1,0 +1,26 @@
+{
+  "id": "saas-implementation",
+  "label": "SaaS Implementation Flow",
+  "defaultUnit": "order",
+  "stages": [
+    { "id": "purchase", "label": "Purchase / Deal", "color": "#2563eb", "order": 0, "events": ["deal_created", "deal_won", "order_placed"] },
+    { "id": "billing", "label": "Billing / Invoice", "color": "#0891b2", "order": 1, "events": ["invoice_issued", "payment_received"] },
+    { "id": "onboarding", "label": "Onboarding / Sales handoff", "color": "#7c3aed", "order": 2, "events": ["handoff_to_cs", "kickoff_scheduled"] },
+    { "id": "implementation", "label": "Implementation", "color": "#16a34a", "order": 3, "events": ["implementation_started", "go_live"] },
+    { "id": "support", "label": "Support", "color": "#dc2626", "order": 4, "events": ["ticket_opened", "ticket_resolved"] },
+    { "id": "renewal", "label": "Renewal / Retention", "color": "#d97706", "order": 5, "events": ["renewal_offered", "renewed", "churned"] }
+  ],
+  "cardinality": [
+    { "from": "purchase", "to": "billing", "max": 1, "expected": true },
+    { "from": "purchase", "to": "onboarding", "max": 1, "expected": true },
+    { "from": "purchase", "to": "implementation", "max": 1, "expected": true },
+    { "from": "purchase", "to": "support", "max": "many", "expected": false },
+    { "from": "purchase", "to": "renewal", "max": 1, "expected": false }
+  ],
+  "joinKeys": [
+    { "key": "order_id", "aliases": ["order_id", "deal_id", "deal", "opportunity_id"] },
+    { "key": "invoice_id", "aliases": ["invoice_id", "invoice", "invoice_no"] },
+    { "key": "account_email", "aliases": ["email", "contact_email", "customer_email"] },
+    { "key": "company", "aliases": ["company", "account", "customer", "customer_name", "account_name"] }
+  ]
+}

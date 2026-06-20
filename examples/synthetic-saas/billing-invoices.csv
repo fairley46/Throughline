@@ -1,0 +1,5 @@
+invoice_no,deal,customer_email,total,invoice_issued_at,event
+2025-113,4471,john@acme.com,24000,2025-01-08T09:00:00Z,invoice_issued
+2025-440,5500,john@acme.com,31000,2025-06-09T09:00:00Z,invoice_issued
+2025-205,6610,mara@globex.io,18000,2025-02-13T09:00:00Z,invoice_issued
+2025-260,7200,bill@initech.com,52000,2025-03-04T09:00:00Z,invoice_issued

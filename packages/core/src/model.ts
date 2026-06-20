@@ -50,10 +50,61 @@ export interface Journey {
   confidence: number;
 }
 
-/** A first-class gap. Two kinds matter; see the design spec. */
+/**
+ * The service-architecture axis (supplement spec, Part A).
+ *
+ * The second axis of the "invisible operating floor": not just how work flows
+ * (the value stream / journeys), but what the work runs on and what it costs.
+ * `stages_served[]` is THE BRIDGE between this axis and the value-stream axis —
+ * it turns cost-per-stage from labor-only into labor + allocated tooling.
+ */
+export interface ServiceNode {
+  service_id: string;
+  /** "Dentrix", "Salesforce", "AWS", "Stripe". */
+  name: string;
+  /** practice_mgmt | crm | accounting | comms | infra | payments | hr | bi | security | ... */
+  category: string;
+  /** subscription_per_seat | subscription_flat | usage | transaction_fee | one_time. */
+  cost_model:
+    | 'subscription_per_seat'
+    | 'subscription_flat'
+    | 'usage'
+    | 'transaction_fee'
+    | 'one_time';
+  /** Normalized to monthly. */
+  monthly_cost: number;
+  /** Licensed seats (nullable). */
+  seats: number | null;
+  /** Seats actually in use, if known (nullable) -> waste signal. */
+  utilized_seats: number | null;
+  /** For usage / transaction models (nullable). */
+  usage_volume: number | null;
+  /** Which roles / FTEs use it (nullable). */
+  fte_roles: string[];
+  /** Stage ids this service powers -- THE BRIDGE. Empty -> orphan candidate. */
+  stages_served: string[];
+  vendor: string;
+  /** Which input revealed this. */
+  source: string;
+  /** How sure we are about placement / cost. */
+  confidence: number;
+}
+
+/** A first-class gap. Value-stream kinds + service-architecture kinds. */
 export interface Gap {
   gap_id: string;
-  type: 'orphan' | 'weak_link' | 'interval_seam' | 'missing_expected_stage';
+  type:
+    | 'orphan'
+    | 'weak_link'
+    | 'interval_seam'
+    | 'missing_expected_stage'
+    | 'orphan_service'
+    | 'redundant_service'
+    | 'underutilized_service';
+  /** For service gaps: the service this gap is about (null otherwise). */
+  service_id?: string | null;
+  /** Monthly cost flowing into this gap (service gaps) so the render can total it. */
+  cost?: number | null;
   /** Journey it belongs to (or candidate). Null for unattached orphans. */
   entity_id: string | null;
   /** Seam start stage, if interval type. */
@@ -112,6 +163,49 @@ export interface Bottleneck {
   gap_ids: string[];
 }
 
+/** Per-stage service-architecture rollup (the bridge made numeric). */
+export interface StageServiceDiagnostics {
+  stage: string;
+  label: string;
+  /** Services powering this stage (service_ids). */
+  service_ids: string[];
+  /** Allocated tooling cost: sum of monthly_cost/|stages_served| per service. */
+  toolingCost: number;
+  /** Labor proxy: direct event cost observed at the stage (from value-stream). */
+  laborCost: number;
+  /** True cost = tooling + labor (+ direct). */
+  trueCost: number;
+  /** Distinct vendors powering this stage. */
+  vendors: string[];
+  /** True when all tooling at this stage is a single vendor (concentration risk). */
+  singleVendor: boolean;
+}
+
+/** App-sprawl signal: >1 active service in a category serving overlapping stages. */
+export interface CategorySprawl {
+  category: string;
+  service_ids: string[];
+  /** Stages where >1 service in this category overlap. */
+  overlappingStages: string[];
+  monthlyCost: number;
+}
+
+/** Service-architecture diagnostics (supplement spec, Part A). */
+export interface ServiceDiagnostics {
+  /** Per-stage tooling/true cost (the bridge). */
+  perStage: StageServiceDiagnostics[];
+  /** Total monthly service spend across the inventory. */
+  totalMonthlyServiceSpend: number;
+  /** Tooling + labor + direct cost allocated per completed/non-orphan journey. */
+  costPerJourney: number | null;
+  /** App-sprawl index: distinct services per category; flagged overlaps. */
+  appSprawl: CategorySprawl[];
+  /** Stages whose tooling is entirely one vendor (concentration risk). */
+  vendorConcentrationStages: { stage: string; vendor: string; cost: number }[];
+  /** $/mo across orphan + underutilized + redundant services. */
+  spendInGapsMonthly: number;
+}
+
 export interface Diagnostics {
   stages: StageDiagnostics[];
   bottlenecks: Bottleneck[];
@@ -120,6 +214,8 @@ export interface Diagnostics {
   totalCost: number;
   /** Distinct actors across the whole stream (FTE proxy). */
   totalActors: number;
+  /** Service-architecture diagnostics (null when no service inventory present). */
+  services: ServiceDiagnostics | null;
 }
 
 /** The full persisted artifact. */
@@ -137,7 +233,9 @@ export interface ValueStreamModel {
   sourceProfiles: SourceProfile[];
   /** The reconstructed journeys. */
   journeys: Journey[];
-  /** First-class gaps. */
+  /** The service-architecture inventory (second axis). Empty if none provided. */
+  services: ServiceNode[];
+  /** First-class gaps (value-stream + service-architecture). */
   gaps: Gap[];
   /** The honest ledger. */
   ledger: Ledger;
@@ -202,6 +300,48 @@ export function validateModel(model: ValueStreamModel): string[] {
   for (const e of model.events) {
     if (!placed.has(e.event_id)) {
       issues.push(`event ${e.event_id} is neither in a journey nor a gap (silent drop)`);
+    }
+  }
+
+  // Service-architecture axis: mirror the event rule. Every service must map to
+  // >= 1 known stage OR be represented as a service gap (no silent drops).
+  if (model.services && !Array.isArray(model.services)) {
+    issues.push('services is not an array');
+  }
+  const knownStages = new Set(model.stages.map((s) => s.id));
+  const seenService = new Set<string>();
+  // Services referenced by any service gap (orphan/redundant/underutilized).
+  const serviceInGap = new Set<string>();
+  for (const g of model.gaps) {
+    if (g.service_id) serviceInGap.add(g.service_id);
+  }
+  for (const s of model.services ?? []) {
+    if (!s.service_id) issues.push('service missing service_id');
+    else if (seenService.has(s.service_id)) issues.push(`duplicate service ${s.service_id}`);
+    else seenService.add(s.service_id);
+    // stages_served must reference real stages.
+    for (const st of s.stages_served) {
+      if (!knownStages.has(st)) {
+        issues.push(`service ${s.service_id} refs unknown stage ${st}`);
+      }
+    }
+    const mapped = s.stages_served.filter((st) => knownStages.has(st)).length;
+    if (mapped < 1 && !serviceInGap.has(s.service_id)) {
+      issues.push(
+        `service ${s.service_id} maps to no known stage and is not represented as a gap (silent drop)`,
+      );
+    }
+  }
+  // Service gaps must reference a real service.
+  for (const g of model.gaps) {
+    if (
+      (g.type === 'orphan_service' ||
+        g.type === 'redundant_service' ||
+        g.type === 'underutilized_service') &&
+      g.service_id &&
+      !seenService.has(g.service_id)
+    ) {
+      issues.push(`service gap ${g.gap_id} refs missing service ${g.service_id}`);
     }
   }
 

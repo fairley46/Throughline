@@ -16,7 +16,9 @@ import type {
   Diagnostics,
   StageDiagnostics,
   Bottleneck,
+  ServiceNode,
 } from './model.js';
+import { computeServiceDiagnostics } from './services.js';
 
 function median(xs: number[]): number | null {
   if (xs.length === 0) return null;
@@ -36,6 +38,7 @@ export function computeDiagnostics(
   journeys: Journey[],
   gaps: Gap[],
   vertical: VerticalConfig,
+  services: ServiceNode[] = [],
 ): Diagnostics {
   const byId = new Map(events.map((e) => [e.event_id, e]));
 
@@ -115,11 +118,20 @@ export function computeDiagnostics(
   const totalCost = events.reduce((s, e) => s + (e.cost ?? 0), 0);
   const totalActors = new Set(events.map((e) => e.actor).filter(Boolean) as string[]).size;
 
+  const serviceDiagnostics = computeServiceDiagnostics(
+    services,
+    vertical.stages.map((s) => ({ id: s.id, label: s.label })),
+    stages,
+    gaps,
+    journeys,
+  );
+
   return {
     stages,
     bottlenecks,
     endToEndMedianMs: median(e2e),
     totalCost,
     totalActors,
+    services: serviceDiagnostics,
   };
 }

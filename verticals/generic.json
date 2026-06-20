@@ -1,0 +1,24 @@
+{
+  "id": "generic",
+  "label": "Generic Value Stream (fallback)",
+  "defaultUnit": "case",
+  "stages": [
+    { "id": "acquire", "label": "Acquire / Request", "color": "#2563eb", "order": 0, "events": ["created", "requested", "opened", "deal_created", "order_placed"] },
+    { "id": "transact", "label": "Transact / Bill", "color": "#0891b2", "order": 1, "events": ["invoice_issued", "payment_received", "quoted", "estimate_created"] },
+    { "id": "fulfill", "label": "Fulfill / Deliver", "color": "#16a34a", "order": 2, "events": ["fulfilled", "delivered", "shipped", "implementation_started", "work_started", "go_live"] },
+    { "id": "service", "label": "Service / Support", "color": "#dc2626", "order": 3, "events": ["ticket_opened", "ticket_resolved", "serviced", "supported"] },
+    { "id": "retain", "label": "Retain / Close", "color": "#d97706", "order": 4, "events": ["closed", "renewed", "churned", "completed", "picked_up"] }
+  ],
+  "cardinality": [
+    { "from": "acquire", "to": "transact", "max": 1, "expected": true },
+    { "from": "acquire", "to": "fulfill", "max": 1, "expected": true },
+    { "from": "acquire", "to": "service", "max": "many", "expected": false },
+    { "from": "acquire", "to": "retain", "max": 1, "expected": false }
+  ],
+  "joinKeys": [
+    { "key": "case_id", "aliases": ["case_id", "id", "order_id", "deal_id", "deal", "ref", "reference", "repair_order", "ro"] },
+    { "key": "invoice_id", "aliases": ["invoice_id", "invoice", "invoice_no"] },
+    { "key": "email", "aliases": ["email", "contact_email", "customer_email"] },
+    { "key": "customer", "aliases": ["customer", "company", "account", "customer_name", "name"] }
+  ]
+}
