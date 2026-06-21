@@ -448,11 +448,263 @@ export function eventView(model) {
 }
 
 // =============================================================================
+// Shared visual helpers (palette for sources; pure, browser-safe).
+// =============================================================================
+const SOURCE_PALETTE = [
+  '#3b82f6', '#22c55e', '#eab308', '#ec4899', '#06b6d4',
+  '#f97316', '#a855f7', '#14b8a6', '#ef4444', '#84cc16',
+];
+function sourcePalette(model) {
+  const sources = [...new Set(model.events.map((e) => e.source ?? '—'))].sort();
+  const map = new Map();
+  sources.forEach((s, i) => map.set(s, SOURCE_PALETTE[i % SOURCE_PALETTE.length]));
+  return map;
+}
+
+// =============================================================================
+// FLOW view — the headline value-stream flow diagram. Stage nodes are
+// click-through to stageDrill; edges are weighted by journey traffic and the
+// bottleneck (interval-seam) edges are colored + labeled with unowned time.
+// =============================================================================
+export function flowView(model) {
+  const stages = model.stages.slice().sort((a, b) => a.order - b.order);
+  const idx = new Map(stages.map((s, i) => [s.id, i]));
+  const sdById = new Map(model.diagnostics.stages.map((s) => [s.stage, s]));
+
+  // Count journey transitions between DISTINCT consecutive stages along each
+  // journey's event chain (events are already in stage+time order).
+  const transitions = new Map(); // "from->to" -> count
+  const key = (a, b) => a + '' + b;
+  for (const j of model.journeys) {
+    const chain = j.event_ids
+      .map((id) => model.events.find((e) => e.event_id === id))
+      .filter(Boolean)
+      .map((e) => e.stage);
+    let prev = null;
+    for (const st of chain) {
+      if (prev != null && prev !== st && idx.has(prev) && idx.has(st)) {
+        const k = key(prev, st);
+        transitions.set(k, (transitions.get(k) || 0) + 1);
+      }
+      if (idx.has(st)) prev = st;
+    }
+  }
+
+  // Bottleneck lookup for inter-stage seams (skip self-loops here).
+  const bottleneck = new Map(); // "from->to" -> bottleneck
+  for (const b of model.diagnostics.bottlenecks) {
+    if (b.stage_from !== b.stage_to) bottleneck.set(key(b.stage_from, b.stage_to), b);
+  }
+
+  // Layout geometry.
+  const NW = 150, NH = 86, GAP = 96, PADX = 28, PADY = 96;
+  const W = PADX * 2 + stages.length * NW + Math.max(0, stages.length - 1) * GAP;
+  const H = PADY + NH + 120;
+  const nodeY = PADY;
+  const cx = (i) => PADX + i * (NW + GAP) + NW / 2;
+  const nodeX = (i) => PADX + i * (NW + GAP);
+
+  const maxCount = Math.max(1, ...transitions.values());
+  const strokeFor = (n) => 1.5 + (n / maxCount) * 13;
+
+  // Edges (drawn first, under nodes). Curve forward edges along the top; bend
+  // backward/skip edges below so they remain legible.
+  let edges = '';
+  for (const [k, count] of transitions) {
+    const [from, to] = k.split('');
+    const i = idx.get(from), j = idx.get(to);
+    const x1 = nodeX(i) + NW, y1 = nodeY + NH / 2;
+    const x2 = nodeX(j), y2 = nodeY + NH / 2;
+    const bn = bottleneck.get(k);
+    const back = j < i;
+    const sw = strokeFor(count);
+    const color = bn ? '#f97316' : '#3b82f6';
+    const op = bn ? 0.95 : 0.55;
+    let path, lx, ly;
+    if (back) {
+      // route below the nodes
+      const sx = nodeX(i) + NW / 2, ex = nodeX(j) + NW / 2;
+      const dip = nodeY + NH + 64;
+      path = `M ${sx} ${nodeY + NH} C ${sx} ${dip}, ${ex} ${dip}, ${ex} ${nodeY + NH}`;
+      lx = (sx + ex) / 2; ly = dip + 4;
+    } else {
+      const mx = (x1 + x2) / 2;
+      path = `M ${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}`;
+      lx = mx; ly = y1 - 10;
+    }
+    const tip = bn
+      ? `${stageLabel(model, from)} → ${stageLabel(model, to)} · ${count} journeys · BOTTLENECK median ${days(bn.medianIntervalMs)} unowned (${bn.occurrences}×)`
+      : `${stageLabel(model, from)} → ${stageLabel(model, to)} · ${count} journeys`;
+    edges += `<path d="${path}" fill="none" stroke="${color}" stroke-width="${sw.toFixed(1)}" stroke-opacity="${op}" stroke-linecap="round"><title>${esc(tip)}</title></path>`;
+    if (bn) {
+      const lbl = `${days(bn.medianIntervalMs)} · ${bn.occurrences}×`;
+      edges += `<text x="${lx}" y="${ly}" text-anchor="middle" fill="#f97316" font-size="11" font-weight="700">${esc(lbl)}</text>`;
+    } else if (count > 1) {
+      edges += `<text x="${lx}" y="${ly}" text-anchor="middle" fill="#8b97ad" font-size="10">${count}</text>`;
+    }
+  }
+
+  // Self-loop bottleneck badges (e.g. opportunity→opportunity churn) drawn over
+  // the node so the rework/back-and-forth seam is still visible.
+  const selfBn = new Map();
+  for (const b of model.diagnostics.bottlenecks) {
+    if (b.stage_from === b.stage_to && idx.has(b.stage_from)) selfBn.set(b.stage_from, b);
+  }
+
+  // Nodes.
+  let nodes = '';
+  stages.forEach((s, i) => {
+    const sd = sdById.get(s.id) || { eventCount: 0, journeyCount: 0 };
+    const x = nodeX(i), y = nodeY;
+    nodes += `<g class="flow-node" data-drill="stage" data-id="${esc(s.id)}" style="cursor:pointer">
+      <title>${esc(s.label)} — ${sd.eventCount} events, ${sd.journeyCount} journeys (click to drill)</title>
+      <rect x="${x}" y="${y}" width="${NW}" height="${NH}" rx="12" fill="${s.color}" fill-opacity="0.92" stroke="#0b0f17" stroke-width="2"/>
+      <text x="${x + NW / 2}" y="${y + 28}" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="700">${esc(truncate(s.label, 20))}</text>
+      <text x="${x + NW / 2}" y="${y + 50}" text-anchor="middle" fill="#ffffff" fill-opacity="0.92" font-size="11">${sd.eventCount} events</text>
+      <text x="${x + NW / 2}" y="${y + 68}" text-anchor="middle" fill="#ffffff" fill-opacity="0.92" font-size="11">${sd.journeyCount} journeys</text>`;
+    const sb = selfBn.get(s.id);
+    if (sb) {
+      nodes += `<g><title>${esc(s.label + ' rework seam · ' + days(sb.medianIntervalMs) + ' unowned (' + sb.occurrences + '×)')}</title>
+        <circle cx="${x + NW - 10}" cy="${y + 10}" r="9" fill="#f97316" stroke="#0b0f17" stroke-width="1.5"/>
+        <text x="${x + NW - 10}" y="${y + 14}" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">↻</text></g>`;
+    }
+    nodes += `</g>`;
+  });
+
+  const svg = `<svg viewBox="0 0 ${W} ${H}" width="100%" style="min-width:${W}px" font-family="-apple-system,Segoe UI,Roboto,sans-serif">${edges}${nodes}</svg>`;
+
+  return `<div class="view" id="v-flow">
+    <div class="section">The operating floor — value stream, left to right</div>
+    <div class="note">One node per stage (click to drill). Edge thickness = how many journeys make that transition. Orange edges and labels are bottleneck seams: time nobody owns, median unowned shown. A ↻ badge marks a stage that journeys churn inside before moving on.</div>
+    <div style="overflow-x:auto; border:1px solid var(--line); border-radius:12px; background:var(--panel); padding:12px;">${svg}</div>
+    <div class="kvs" style="margin-top:14px">
+      <span><span class="legend-line" style="background:#3b82f6"></span> journey flow (thicker = more journeys)</span>
+      <span><span class="legend-line" style="background:#f97316"></span> bottleneck seam (unowned time)</span>
+      <span>↻ in-stage rework seam</span>
+    </div>
+  </div>`;
+}
+
+function truncate(s, n) {
+  s = String(s ?? '');
+  return s.length > n ? s.slice(0, n - 1) + '…' : s;
+}
+
+// =============================================================================
+// CONNECTIONS view — reconciliation made visible. Events as nodes positioned by
+// stage (x) and journey (y); links drawn Tier-1 solid / Tier-2 dashed; node
+// color = source so cross-source linkage is the visible story.
+// =============================================================================
+export function connectionsView(model) {
+  const stages = model.stages.slice().sort((a, b) => a.order - b.order);
+  const idx = new Map(stages.map((s, i) => [s.id, i]));
+  const palette = sourcePalette(model);
+  const byId = new Map(model.events.map((e) => [e.event_id, e]));
+
+  // Show the largest N journeys; never silently truncate the rest.
+  const SHOW = 14;
+  const ordered = model.journeys
+    .slice()
+    .sort((a, b) => b.event_ids.length - a.event_ids.length);
+  const shown = ordered.slice(0, SHOW);
+  const hidden = ordered.length - shown.length;
+
+  const COLX = 168, PADX = 150, PADY = 56, ROWH = 64, R = 9;
+  const W = PADX + stages.length * COLX + 40;
+  const H = PADY + shown.length * ROWH + 30;
+  const colX = (i) => PADX + i * COLX;
+  const rowY = (r) => PADY + r * ROWH + ROWH / 2;
+
+  // Stage column headers + guide lines.
+  let cols = '';
+  stages.forEach((s, i) => {
+    const x = colX(i);
+    cols += `<line x1="${x}" y1="${PADY - 18}" x2="${x}" y2="${H - 14}" stroke="${s.color}" stroke-opacity="0.18" stroke-width="1"/>`;
+    cols += `<text x="${x}" y="${PADY - 26}" text-anchor="middle" fill="${s.color}" font-size="11" font-weight="700">${esc(truncate(s.label, 16))}</text>`;
+  });
+
+  // Per-journey row: place each event at its stage column. If multiple events
+  // share a stage in one journey, fan them slightly on the y axis.
+  let rows = '';
+  shown.forEach((j, r) => {
+    const baseY = rowY(r);
+    // row label
+    const cls =
+      j.provenance === 'reconstructed' ? '#5ee08a' : j.provenance === 'inferred' ? '#f0b860' : '#f08a8a';
+    rows += `<text x="12" y="${baseY + 4}" fill="${cls}" font-size="11" font-family="ui-monospace,Menlo,monospace">${esc(truncate(j.entity_id, 18))}</text>`;
+
+    // position events; track per-stage count for fan-out
+    const stageCount = new Map();
+    const pos = new Map(); // event_id -> {x,y}
+    for (const id of j.event_ids) {
+      const e = byId.get(id);
+      if (!e || !idx.has(e.stage)) continue;
+      const i = idx.get(e.stage);
+      const n = stageCount.get(i) || 0;
+      stageCount.set(i, n + 1);
+      const yoff = (n % 3) * 13 - 13; // -13,0,13 fan
+      pos.set(id, { x: colX(i), y: baseY + yoff, e });
+    }
+
+    // links for this journey
+    for (const l of j.links) {
+      const a = pos.get(l.from_event), b = pos.get(l.to_event);
+      if (!a || !b) continue;
+      const t1 = l.tier === 'tier1_deterministic';
+      const op = (0.3 + 0.6 * Math.max(0, Math.min(1, l.confidence))).toFixed(2);
+      const ev = (l.evidence ?? [])
+        .map((s) => `${s.signal} (+${(s.contribution ?? 0).toFixed(2)})`)
+        .join(', ');
+      const tip = `${l.from_event} → ${l.to_event} · ${t1 ? 'Tier-1 deterministic' : 'Tier-2 probabilistic'} · conf ${l.confidence.toFixed(2)}${ev ? ' · ' + ev : ''}`;
+      const mx = (a.x + b.x) / 2;
+      const path = `M ${a.x} ${a.y} C ${mx} ${a.y}, ${mx} ${b.y}, ${b.x} ${b.y}`;
+      rows += `<path d="${path}" fill="none" stroke="${t1 ? '#5ee08a' : '#f0b860'}" stroke-width="${t1 ? 2 : 1.6}" stroke-opacity="${op}"${t1 ? '' : ' stroke-dasharray="5 4"'}><title>${esc(tip)}</title></path>`;
+    }
+
+    // nodes on top
+    for (const { x, y, e } of pos.values()) {
+      const color = palette.get(e.source ?? '—') || '#64748b';
+      const tip = `${e.event} · ${e.source ?? '—'} · ${stageLabel(model, e.stage)}${e.timestamp ? ' · ' + e.timestamp : ''}`;
+      rows += `<circle cx="${x}" cy="${y}" r="${R}" fill="${color}" stroke="#0b0f17" stroke-width="2"><title>${esc(tip)}</title></circle>`;
+    }
+  });
+
+  const svg = `<svg viewBox="0 0 ${W} ${H}" width="100%" style="min-width:${W}px" font-family="-apple-system,Segoe UI,Roboto,sans-serif">${cols}${rows}</svg>`;
+
+  // Source legend.
+  const srcLegend = [...palette.entries()]
+    .map(
+      ([src, color]) =>
+        `<span><span class="legend-dot" style="background:${color}"></span>${esc(src)}</span>`,
+    )
+    .join('');
+
+  return `<div class="view" id="v-connections">
+    <div class="section">Reconciliation — how records across systems become one journey</div>
+    <div class="note">Each row is a journey; each dot is a source record placed at its stage. Dot color = the source system it came from, so a row spanning many colors is the cross-system linkage made visible. Solid green links are Tier-1 deterministic (shared key); dashed amber are Tier-2 probabilistic (composite evidence) — opacity tracks confidence. Hover any link for the signals that fired.</div>
+    ${
+      hidden > 0
+        ? `<div class="note warn">Showing the ${shown.length} largest journeys of ${ordered.length}. ${hidden} smaller journeys are not drawn here — see the Ledger tab for the full list.</div>`
+        : ''
+    }
+    <div class="kvs" style="margin:6px 0 12px">
+      <span><span class="legend-line" style="background:#5ee08a"></span> Tier-1 deterministic (solid)</span>
+      <span><span class="legend-line" style="background:#f0b860;height:0;border-top:2px dashed #f0b860"></span> Tier-2 probabilistic (dashed)</span>
+    </div>
+    <div style="overflow-x:auto; border:1px solid var(--line); border-radius:12px; background:var(--panel); padding:12px;">${svg}</div>
+    <div class="section">Source systems</div>
+    <div class="kvs">${srcLegend}</div>
+  </div>`;
+}
+
+// =============================================================================
 // Assembly: tabs + all views. Shared by static and served.
 // =============================================================================
 export function buildTabs() {
   return [
     ['v-ledger', 'Ledger', true],
+    ['v-flow', 'Flow', false],
+    ['v-connections', 'Connections', false],
     ['v-stage', 'Stages & cost', false],
     ['v-service', 'Service architecture', false],
     ['v-gaps', 'Gaps & spend-in-gaps', false],
@@ -468,6 +720,8 @@ export function buildTabs() {
 export function buildViews(model) {
   return [
     ledgerView(model),
+    flowView(model),
+    connectionsView(model),
     stageView(model),
     serviceView(model),
     gapsView(model),
@@ -535,6 +789,8 @@ summary { cursor:pointer; font-weight:600; padding:8px 0; }
 .bar { height:8px; border-radius:4px; background:var(--accent); }
 .kvs { display:flex; gap:18px; flex-wrap:wrap; color:var(--muted); font-size:12px; }
 .right { text-align:right; }
+.legend-dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; vertical-align:middle; }
+.legend-line { display:inline-block; width:22px; height:3px; border-radius:2px; margin-right:6px; vertical-align:middle; }
 .drill-overlay { position:fixed; inset:0; background:rgba(0,0,0,.5); display:none; z-index:50; }
 .drill-overlay.open { display:block; }
 .drill-panel { position:fixed; top:0; right:0; height:100%; width:min(760px,94vw); background:var(--bg);

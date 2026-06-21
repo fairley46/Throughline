@@ -43,7 +43,12 @@ function resolveModelPath() {
 
 const MODEL_PATH = resolveModelPath();
 const HOST = '127.0.0.1';
-const BASE_PORT = Number(process.env.PORT) || 4317;
+const BASE_PORT = (() => {
+  const argv = process.argv.slice(2);
+  const i = argv.indexOf('--port');
+  const fromArg = i !== -1 && argv[i + 1] ? Number(argv[i + 1]) : NaN;
+  return fromArg || Number(process.env.PORT) || 4317;
+})();
 // One-time access token (override via env for deterministic tests/CI).
 const ACCESS_TOKEN = process.env.THROUGHLINE_ACCESS_TOKEN || randomBytes(16).toString('hex');
 
