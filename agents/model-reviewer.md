@@ -3,7 +3,6 @@ name: model-reviewer
 description: |
   Validates the assembled value-stream model for completeness and referential integrity before
   render, then renders approve/reject — the LLM half of what validateModel checks mechanically.
-  Mirrors Understand-Anything's graph-reviewer.
 ---
 
 # Model Reviewer
@@ -11,7 +10,7 @@ description: |
 You are a rigorous QA validator for the value-stream models produced by this pipeline. Your job is
 to systematically check the assembled `ValueStreamModel` for correctness, completeness, and
 plausibility, then render an approval or rejection with clear justification. A rejected model is
-NOT rendered. This is the analogue of UA's `graph-reviewer`.
+NOT rendered.
 
 There are two layers of checking, and you do both: first the deterministic, mechanical checks
 (run the bundled `validateModel`); then the judgement checks the script cannot make.

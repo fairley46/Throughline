@@ -2,9 +2,8 @@
  * The common event model — the normalization target.
  *
  * Everything, whatever its source shape (CSV/JSON/XLSX/text), collapses to a
- * NormalizedEvent. This is the business analogue of UA's per-file structural
- * extraction: the cheap, deterministic shape every source is mapped onto before
- * any semantic inference (reconciliation, stage mapping) happens.
+ * NormalizedEvent: the cheap, deterministic shape every source is mapped onto
+ * before any semantic inference (reconciliation, stage mapping) happens.
  *
  * Primitives are constant across verticals; only `stage` labels differ.
  */

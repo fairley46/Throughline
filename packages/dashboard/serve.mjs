@@ -1,14 +1,13 @@
 /**
  * serve.mjs — token-gated localhost dashboard server.
  *
- * The Understand-Anything analogue of `understand-dashboard`: instead of static
- * out/index.html, this serves the full interactive click-through dashboard from
- * a server bound to 127.0.0.1, gated by a one-time access token printed to the
- * terminal — exactly like UA's Vite dev server:
+ * Instead of static out/index.html, this serves the full interactive
+ * click-through dashboard from a server bound to 127.0.0.1, gated by a one-time
+ * access token printed to the terminal:
  *
  *   🔑  Dashboard URL: http://127.0.0.1:<PORT>/?token=<TOKEN>
  *
- * Security model mirrored from UA's vite.config.ts:
+ * Security model:
  *   - bind 127.0.0.1 ONLY (never 0.0.0.0) — no LAN exposure.
  *   - a one-time crypto token generated per process start.
  *   - the data endpoint /model.json requires ?token=<TOKEN>, else HTTP 403.
@@ -19,9 +18,9 @@
  * builders the static render uses (packages/dashboard/views.mjs), so there is
  * one source of truth for both the portable file and the served dashboard.
  *
- * Zero runtime dependencies — node:http + node:crypto only. (UA uses Vite/React;
- * our model is small and the views are pure HTML strings, so a tiny http server
- * is the cleaner fit and keeps the package dependency-free.)
+ * Zero runtime dependencies — node:http + node:crypto only. The model is small
+ * and the views are pure HTML strings, so a tiny http server is the cleaner fit
+ * and keeps the package dependency-free.
  */
 
 import { createServer } from 'node:http';

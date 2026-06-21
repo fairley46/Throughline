@@ -1,8 +1,7 @@
 /**
  * The persisted value-stream MODEL — the durable artifact.
  *
- * This is the business analogue of UA's knowledge-graph.json. A run is
- * stateless; this JSON file IS the persistence layer. Re-run to refresh,
+ * A run is stateless; this JSON file IS the persistence layer. Re-run to refresh,
  * commit to share, load to interrogate / render later.
  *
  * The render reads ONLY this model (model-first; never raw data).

@@ -2,8 +2,8 @@
 /**
  * profile-sources.mjs
  *
- * Deterministic source profiling, feeding the `source-profiler` agent — the
- * analogue of UA's scan-project.mjs. No LLM. For each source file it profiles
+ * Deterministic source profiling, feeding the `source-profiler` agent. No LLM.
+ * For each source file it profiles
  * columns and flags which look like timestamps, cost, person/FTE, or ids
  * (candidate join keys).
  *

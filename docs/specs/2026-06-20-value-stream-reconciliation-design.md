@@ -9,11 +9,11 @@
 
 ## Scope of this document
 
-This designs the **net-new reconciliation layer** only — the part with no analogue in
-`Lum1104/Understand-Anything`, because code hands you the graph for free and business data
-does not. Everything else in the pipeline (source-profiler, event-normalizer, stage-mapper,
-diagnostician, model-reviewer, render) mirrors UA's existing architecture and is specified in
-the build brief, not here.
+This designs the **reconciliation layer** only — the hardest part of the pipeline. Unlike a
+codebase, where the dependency graph is explicit, business data carries no built-in links, so they
+have to be reconstructed. Everything else in the pipeline (source-profiler, event-normalizer,
+stage-mapper, diagnostician, model-reviewer, render) is specified in the architecture overview,
+not here.
 
 Per the build spec: spend disproportionate design effort here. This is the product.
 
@@ -62,22 +62,21 @@ config defines the legal shape that prevents the blob.
 
 ---
 
-## The script / agent boundary (mirrored from UA)
+## The script / agent boundary
 
-UA's efficiency trick: deterministic scripts compute structure cheaply; LLM agents judge
-meaning. `extract-import-map.mjs` finds cross-file edges; `file-analyzer` interprets them.
-We mirror it for cross-*source* edges:
+The efficiency trick: deterministic scripts compute structure cheaply; LLM agents judge
+meaning. We apply that split to cross-*source* edges:
 
 - **`detect-join-candidates.mjs`** — deterministic, no LLM. Column-value overlap analysis,
   key normalization (email casing, name / phone / company variants), temporal-window candidate
-  generation, value correlation. Emits a candidate-link list with **raw per-signal scores.**
-  This is our analogue of `extract-import-map.mjs`.
+  generation, value correlation. Emits a candidate-link list with **raw per-signal scores** —
+  the deterministic join-candidate detector computes evidence, it does not decide membership.
 - **`reconciler`** — LLM agent. Takes candidates + signal scores and makes the semantic calls a
   script cannot: is this column overlap a genuine foreign key or coincidence? does this fuzzy
   match make business sense? is this 11-day gap a real seam or just a weekend? Assigns final
   confidence; classifies gaps.
 
-Scripts compute evidence; the agent judges meaning. Same split, same reason as UA.
+Scripts compute evidence; the agent judges meaning.
 
 ---
 

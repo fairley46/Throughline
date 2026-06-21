@@ -1,42 +1,21 @@
-# Repo Structure — derived from Understand-Anything's actual layout
+# Repo Structure
 
-This is the recommended file structure for `throughline`, derived by studying the real
-layout of `Lum1104/Understand-Anything` (UA) v2.7.7 installed locally. We mirror its
-*architecture and division of labor*, not its domain. UA is a code→knowledge-graph tool;
-we are the business-data→value-stream equivalent.
+This is the file structure for `throughline` and the design principles behind it. The
+architecture cleanly separates cheap deterministic work from LLM judgement, applied to the
+business-data → value-stream domain.
 
-## What UA actually looks like (the parts we steal)
+## The load-bearing pattern
 
-```
-understand-anything/
-  pnpm-workspace.yaml          # monorepo: packages/*
-  package.json  vitest.config.ts  tsconfig.json
-  packages/core/               # TS engine: parsers, persistence, schema, types
-    src/{types.ts, schema.ts, ...}
-  packages/dashboard/          # interactive render, reads persisted JSON
-  skills/<name>/               # SKILL.md + deterministic .mjs/.py helper scripts
-    understand/
-      SKILL.md                 # the orchestrator: phases 0–7, dispatches agents
-      scan-project.mjs         # deterministic structural extraction (no LLM)
-      extract-structure.mjs    # deterministic
-      extract-import-map.mjs   # deterministic cross-file edges  <-- our analogue target
-      compute-batches.mjs      # deterministic batching
-      merge-batch-graphs.py    # deterministic assembly
-  agents/*.md                  # LLM agents (project-scanner, file-analyzer, graph-reviewer…)
-```
-
-The load-bearing pattern, verbatim from UA:
-
-- **Deterministic scripts compute structure cheaply (no LLM).** `extract-import-map.mjs`
-  finds cross-file edges; `file-analyzer` (LLM) interprets them.
+- **Deterministic scripts compute structure cheaply (no LLM).** `detect-join-candidates.mjs`
+  finds cross-source edges; the `reconciler` (LLM) interprets them.
 - **LLM agents judge meaning only.** Each agent is a Markdown prompt in `agents/`.
-- **A merge script assembles** batch outputs into one artifact.
+- **An assembly step combines** stage outputs into one artifact.
 - **A reviewer agent validates** before render.
-- **The dashboard renders from persisted JSON**, never from raw input.
+- **The dashboard renders from the persisted model**, never from raw input.
 - Each `skills/<name>/` is a `SKILL.md` (the orchestration prose) plus the deterministic
   helpers it shells out to. Agents live one level up in `agents/`.
-- `intermediate/` (UA calls it `.understand-anything/intermediate/`) is scratch, gitignored;
-  the durable artifact (`knowledge-graph.json`) is committed/shared.
+- `intermediate/` is scratch, gitignored; the durable artifact (`model.json`) is
+  committed/shared.
 
 ## Our structure
 
@@ -54,10 +33,9 @@ throughline/
     specs/2026-06-20-value-stream-reconciliation-design.md   # LOCKED design
 
   packages/
-    core/                      # the TS engine (analogue of UA packages/core)
+    core/                      # the TS engine
       src/
-        model.ts               # the persisted JSON MODEL schema (zod) + TS types.
-                               #   business analogue of UA's knowledge-graph.json schema:
+        model.ts               # the persisted JSON MODEL schema (zod) + TS types:
                                #   events, journeys, gaps, ledger, stages, diagnostics.
         event-model.ts         # the common event model (normalization target) types
         verticals.ts           # vertical config types (stage order, cardinality, handoffs)
@@ -71,7 +49,7 @@ throughline/
         __tests__/
           reconcile.test.ts    # OVER-MERGE GUARD regression test (the required one)
           diagnostics.test.ts
-    dashboard/                 # the render (analogue of UA packages/dashboard)
+    dashboard/                 # the render
       views.mjs                # SHARED, environment-agnostic view builders (one source
                                #   of truth). Pure (model)->html string fns: LEDGER, STAGE,
                                #   SERVICE, GAPS, EVENT + the stage/journey DRILL-DOWN
@@ -84,8 +62,8 @@ throughline/
                                #   offline. The portable artifact (no server, no build).
       template.mjs             # the static page shell (wires views.mjs STYLE/CLIENT_SCRIPT
                                #   + embedded model into one self-contained HTML file).
-      serve.mjs                # SERVED dashboard: token-gated localhost server (analogue of
-                               #   UA's understand-dashboard Vite server). Binds 127.0.0.1,
+      serve.mjs                # SERVED dashboard: token-gated localhost server.
+                               #   Binds 127.0.0.1,
                                #   prints `🔑 Dashboard URL: http://127.0.0.1:<PORT>/?token=`,
                                #   gates /model.json behind ?token= (403 without). Serves a
                                #   shell that fetches the model and renders the SAME views.mjs
@@ -95,13 +73,12 @@ throughline/
 
   skills/
     value-stream-dashboard/
-      SKILL.md                 # launch path mirroring UA's understand-dashboard: start the
-                               #   token-gated server and report the tokenized URL. The served
+      SKILL.md                 # launch path: start the token-gated server and report the
+                               #   tokenized URL. The served
                                #   counterpart to the portable static out/index.html.
     reconstruct-value-stream/
-      SKILL.md                 # the orchestrator: phases mirroring UA's phase model
-      detect-join-candidates.mjs   # DETERMINISTIC, no LLM. Our analogue of
-                                   #   extract-import-map.mjs: column-value overlap,
+      SKILL.md                 # the orchestrator: the phase pipeline
+      detect-join-candidates.mjs   # DETERMINISTIC, no LLM. Column-value overlap,
                                    #   key normalization, temporal-window candidates,
                                    #   value correlation -> raw per-signal scores.
       profile-sources.mjs      # deterministic source profiling (cols, types, candidate
@@ -135,33 +112,29 @@ throughline/
   out/                         # gitignored; rendered HTML + model.json land here
 ```
 
-## Rationale for the few places we deviate from UA
+## Rationale for key structural choices
 
-1. **`reconcile.ts` lives in `packages/core`, not as a `.mjs` in `skills/`.** UA's
-   deterministic helpers are `.mjs` because their logic (tree-sitter resolution) is glue.
-   Our reconciler is *the product* and the design spec demands an auditable over-merge
-   guard with a regression test. Putting the engine in typed, unit-tested `core` (and
-   keeping `detect-join-candidates.mjs` as the cheap evidence-gathering helper that mirrors
-   `extract-import-map.mjs`) preserves UA's script/agent split while making the load-bearing
-   part testable. The `reconciler` *agent* (LLM) still owns the semantic judgement; the
-   engine owns the mechanical guardrails (stage+time ordering, cardinality split) that must
-   not depend on an LLM being careful.
+1. **`reconcile.ts` lives in `packages/core`, not as a `.mjs` in `skills/`.** The reconciler
+   is *the product* and the design spec demands an auditable over-merge guard with a
+   regression test. Putting the engine in typed, unit-tested `core` (and keeping
+   `detect-join-candidates.mjs` as the cheap evidence-gathering helper) preserves the
+   script/agent split while making the load-bearing part testable. The `reconciler` *agent*
+   (LLM) still owns the semantic judgement; the engine owns the mechanical guardrails
+   (stage+time ordering, cardinality split) that must not depend on an LLM being careful.
 
-2. **`run-pipeline.mjs` exists as a runnable harness.** UA's `SKILL.md` is driven by a live
-   agent runtime dispatching subagents per phase. To deliver a *runnable end-to-end* artifact
+2. **`run-pipeline.mjs` exists as a runnable harness.** The live skill is driven by an agent
+   runtime dispatching subagents per phase. To deliver a *runnable end-to-end* artifact
    (deliverable #3 and the synthetic-run proof) without a live agent loop, the deterministic
    stages are wired into one script. Where the real pipeline would call an LLM agent
    (`reconciler` semantic confirm, `stage-mapper` labelling), the script uses the
    vertical config + deterministic heuristics as the "agent judgement" stand-in, and emits
    the same model artifact the agents would. The `agents/*.md` files remain the authoritative
    spec of what each LLM step must do when run under a live runtime; the SKILL.md documents
-   both paths. This mirrors UA's reality (deterministic scripts do the heavy lifting; the LLM
-   adds judgement) while keeping the deliverable self-contained and CI-testable.
+   both paths. This keeps the deliverable self-contained and CI-testable.
 
-3. **`verticals/` is top-level.** UA folds language configs under the skill; our vertical
-   configs are first-class product surface (the cardinality config is half of the over-merge
-   fix per the locked spec), so they get a top-level directory the engine, agents, and tests
-   all read.
+3. **`verticals/` is top-level.** The vertical configs are first-class product surface (the
+   cardinality config is half of the over-merge fix per the locked spec), so they get a
+   top-level directory the engine, agents, and tests all read.
 
 ## Open decisions (flagged for Brad — not blocking)
 

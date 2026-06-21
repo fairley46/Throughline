@@ -3,10 +3,8 @@
  * detect-join-candidates.mjs
  *
  * Deterministic candidate-link generation for the `reconciler` agent.
- * This is our analogue of UA's extract-import-map.mjs: a cheap, no-LLM script
- * that computes the cross-SOURCE evidence (the way extract-import-map computes
- * cross-FILE edges), so the LLM agent can spend its judgement on meaning rather
- * than mechanics.
+ * A cheap, no-LLM script that computes the cross-SOURCE evidence, so the LLM
+ * agent can spend its judgement on meaning rather than mechanics.
  *
  * It does NOT decide which records belong together — that is the reconciler's
  * job (engine + agent). It only emits a candidate-link list with RAW per-signal

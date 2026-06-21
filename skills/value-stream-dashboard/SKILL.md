@@ -1,6 +1,6 @@
 ---
 name: value-stream-dashboard
-description: Launch the interactive, token-gated localhost dashboard to explore a reconstructed value-stream model (the business analogue of Understand-Anything's /understand-dashboard). Serves the click-through EVENT / STAGE / SERVICE-ARCHITECTURE views from a persisted model.json.
+description: Launch the interactive, token-gated localhost dashboard to explore a reconstructed value-stream model. Serves the click-through EVENT / STAGE / SERVICE-ARCHITECTURE views from a persisted model.json.
 argument-hint: ["[--model <path>] [--port <n>]"]
 ---
 
@@ -8,14 +8,13 @@ argument-hint: ["[--model <path>] [--port <n>]"]
 
 Start the Throughline dashboard to explore a reconstructed value-stream model interactively.
 This is the served, token-gated counterpart to the portable static `out/index.html`: it serves
-the full Understand-Anything-style click-through experience from a server bound to `127.0.0.1`,
+the full click-through experience from a server bound to `127.0.0.1`,
 reading **only** the persisted `model.json` (model-first; never the raw sources).
 
-This mirrors Understand-Anything's `understand-dashboard` skill — UA runs a Vite dev server on
-`127.0.0.1`, prints a tokenized URL, and gates the graph data behind a one-time token. We do the
-same with a dependency-free `node:http` server (our model is small and the views are pure HTML
-strings, so Vite/React would be overkill). The token gate and `127.0.0.1`-only binding are the
-load-bearing parts, and they match UA exactly.
+It runs a dependency-free `node:http` server that binds `127.0.0.1`, prints a tokenized URL, and
+gates the model data behind a one-time token. The model is small and the views are pure HTML
+strings, so a heavyweight bundler would be overkill. The token gate and `127.0.0.1`-only binding
+are the load-bearing parts.
 
 ## Instructions
 
@@ -71,7 +70,7 @@ load-bearing parts, and they match UA exactly.
   missing-expected-stage) — never silently dropped.
 - **Events** — every normalized record (the substrate). Click a row to drill into its stage.
 
-## Security model (mirrored from UA)
+## Security model
 
 - Binds `127.0.0.1` **only** — never `0.0.0.0`. No LAN / WiFi exposure.
 - A one-time `crypto`-random token per process start (override with `THROUGHLINE_ACCESS_TOKEN`

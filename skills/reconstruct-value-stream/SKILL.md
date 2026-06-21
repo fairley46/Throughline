@@ -7,15 +7,13 @@ argument-hint: ["--vertical <id> --sources <dir> [--out <dir>] [--unit <unit>] [
 # /reconstruct-value-stream
 
 Analyze a directory of operational data sources and produce a `model.json` artifact in the
-output directory, then render it to `index.html`. The model is this tool's durable output —
-the business analogue of Understand-Anything's `knowledge-graph.json`. A run is stateless; the
-JSON file *is* the persistence layer. Re-run to refresh, commit to share, load to interrogate
-or render later. The render reads **only** the model, never the raw sources.
+output directory, then render it to `index.html`. The model is this tool's durable output.
+A run is stateless; the JSON file *is* the persistence layer. Re-run to refresh, commit to share,
+load to interrogate or render later. The render reads **only** the model, never the raw sources.
 
-This skill mirrors Understand-Anything's architecture and division of labor (deterministic
-scripts compute structure cheaply; LLM agents judge meaning) applied to a different domain.
-Code hands you a dependency graph for free; business data does not, so the load-bearing
-addition here is the **reconciliation layer** — the part that reconstructs one entity's chain
+The architecture splits work cleanly: deterministic scripts compute structure cheaply; LLM agents
+judge meaning. Unlike a codebase, business data carries no explicit dependency graph, so the
+load-bearing layer here is **reconciliation** — the part that reconstructs one entity's chain
 across sources without over-merging two unrelated journeys that merely share a customer. See
 `docs/specs/2026-06-20-value-stream-reconciliation-design.md` (the locked design) and
 `docs/specs/2026-06-20-service-architecture-and-pressure-test.md` (the service-architecture
@@ -137,14 +135,14 @@ agent.
 The agent reads the deterministic profiles and decides what each source *is*: which column is
 the canonical timestamp, which is cost, which is the actor/FTE, which columns are real join keys
 vs. coincidental, and — critically — whether the source is value-stream events or a
-service-architecture inventory. Mirrors UA's `project-scanner` (script enumerates; agent narrates).
+service-architecture inventory. The script enumerates; the agent narrates.
 
 ### Phase 1 — Normalize events *(deterministic mapping; LLM judgement on ambiguity)*
 
 Map each source row onto the common `NormalizedEvent` shape (event_id, event name, timestamp,
 actor, cost, source, and the raw `attributes` that carry the join keys verbatim). The harness
 does this with the column heuristics in `run-pipeline.mjs`; the live path dispatches the
-`event-normalizer` agent (mirrors UA's `file-analyzer`) for rows the heuristics can't classify
+`event-normalizer` agent for rows the heuristics can't classify
 (ambiguous event names, multi-event rows). Output: the `events[]` substrate, `stage` still null.
 
 ### Phase 1b — Ingest the service inventory *(deterministic)*
@@ -165,8 +163,8 @@ the agent.
 
 Compute cross-**source** evidence: column-value overlap, key normalization (email case-fold,
 company-suffix stripping), temporal-window candidates, value correlation. Emit a candidate-link
-list with **raw per-signal scores** and a `hasSharedKey` flag. This is our analogue of UA's
-`extract-import-map.mjs` — it computes evidence, it does not decide membership. It deliberately
+list with **raw per-signal scores** and a `hasSharedKey` flag. The deterministic join-candidate
+detector computes evidence, it does not decide membership. It deliberately
 scores customer-level overlap (email/company) as a *weak* signal, never as a shared key, because
 customer-level overlap is exactly the over-merge trap.
 
@@ -180,8 +178,7 @@ Build journeys by **sequence linkage**, not set dedup: stage-and-time-ordered ch
 under a **cardinality guard** that splits rather than merges when a `max:1` bound would be
 violated (the single corner that must not be cut). The mechanical guardrails live in
 `reconcile.ts` (`reconcile()`), so the over-merge regression test can assert them deterministically.
-On the live path, the `reconciler` agent (mirrors UA's `file-analyzer` interpreting
-`extract-import-map`) makes the semantic calls the script cannot — is this column overlap a real
+On the live path, the `reconciler` agent makes the semantic calls the script cannot — is this column overlap a real
 foreign key or coincidence, does this fuzzy match make business sense, is this 11-day gap a real
 seam or a weekend — and assigns final confidence / classifies gaps. Output: `journeys[]` (with
 tiered, explainable links), the first-class `gaps[]`, and the honest `ledger`.
@@ -190,7 +187,7 @@ tiered, explainable links), the first-class `gaps[]`, and the honest `ledger`.
 
 Assign each reconciled event a value-stream `stage` from the vertical config. The harness uses
 the deterministic event-name → stage map (`buildEventStageMap`); the live path dispatches the
-`stage-mapper` agent (mirrors UA's `domain-analyzer`) for events whose name doesn't match a
+`stage-mapper` agent for events whose name doesn't match a
 configured stage event. Also detect service gaps for the second axis (`detectServiceGaps`).
 
 ### Phase 5 — Diagnose *(deterministic — `diagnostics.ts`; LLM narration optional)*
@@ -207,7 +204,7 @@ see the supplement spec.
 Assemble the `ValueStreamModel`, then validate it. `validateModel()` mechanically checks
 referential integrity and the no-silent-drop invariants (every event in a journey or gap; every
 service mapped or represented as a gap; ledger sums). On `--review`, the `model-reviewer` agent
-(mirrors UA's `graph-reviewer`) additionally judges completeness and plausibility the mechanical
+additionally judges completeness and plausibility the mechanical
 check can't — does the ledger look honest, are the journeys coherent, do the gaps make sense — and
 renders approve/reject. Do not render a rejected model.
 

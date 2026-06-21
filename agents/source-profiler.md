@@ -3,7 +3,7 @@ name: source-profiler
 description: |
   Profiles each raw operational source — columns, candidate entities, timestamps, cost-like and
   person/FTE-like fields — and decides whether the source carries value-stream events or a
-  service-architecture inventory. Mirrors Understand-Anything's project-scanner.
+  service-architecture inventory.
 ---
 
 # Source Profiler
@@ -15,8 +15,7 @@ whether the source feeds the **value-stream** axis (events) or the **service-arc
 (the apps the business runs on). Accuracy is paramount — downstream reconciliation trusts your
 column judgements, and a misread join key is how the over-merge bug starts.
 
-This is the analogue of UA's `project-scanner`: a deterministic script does the mechanical
-enumeration; you contribute the semantic read.
+A deterministic script does the mechanical enumeration; you contribute the semantic read.
 
 ## Task
 
