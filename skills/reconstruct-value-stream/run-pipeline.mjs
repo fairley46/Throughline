@@ -2,7 +2,7 @@
 /**
  * run-pipeline.mjs — the end-to-end deterministic runner.
  *
- * Per docs/STRUCTURE.md (decision #2): UA's SKILL.md is driven by a live agent
+ * Per docs/STRUCTURE.md (decision #2): the live skill is driven by an agent
  * runtime dispatching subagents per phase. To deliver a runnable, CI-testable
  * end-to-end artifact without a live agent loop, the deterministic stages are
  * wired into one script. Where the real pipeline would call an LLM agent
@@ -10,7 +10,7 @@
  * vertical config + deterministic heuristics as the "agent judgement" stand-in,
  * and emits the SAME model artifact the agents would.
  *
- * Phases (mirroring UA's phase model):
+ * Phases:
  *   0. profile-sources        deterministic (profile-sources.mjs)
  *   1. event-normalize        deterministic column->primitive mapping (here)
  *   1b. ingest service inventory (service-architecture axis source)
@@ -73,8 +73,19 @@ function loadVertical(id) {
 // ---------------------------------------------------------------------------
 const SERVICE_FILE_RE = /service|saas|subscription|spend|app[-_]?inventory|expense/i;
 
-function isServiceFile(name) {
-  return SERVICE_FILE_RE.test(name);
+// Service-inventory columns. Classification is by CONTENT, not filename, so a
+// value-stream source that merely happens to contain "service" in its name
+// (e.g. an ITSM/ServiceNow export) is never silently swallowed as inventory.
+const SERVICE_COLS = ['service_id', 'monthly_cost', 'stages_served', 'cost_model', 'utilized_seats'];
+
+function classifySource(name, records) {
+  const cols = records.length ? Object.keys(records[0]).map((c) => c.toLowerCase()) : [];
+  const colHits = SERVICE_COLS.filter((c) => cols.includes(c)).length;
+  return {
+    isService: colHits >= 2, // needs ≥2 service-inventory columns to qualify
+    nameMatches: SERVICE_FILE_RE.test(name),
+    colHits,
+  };
 }
 
 const COST_MODELS = new Set([
@@ -240,11 +251,17 @@ function main() {
   for (const file of files) {
     const name = sourceNameOf(file);
     let records = parseFile(file);
-    if (isServiceFile(name)) {
+    const cls = classifySource(name, records);
+    if (cls.isService) {
       const nodes = records.map((r, i) => toServiceNode(r, name, i));
       services = services.concat(nodes);
       log(`[pipeline]   service-inventory ${name}: ${nodes.length} services`);
       continue;
+    }
+    if (cls.nameMatches) {
+      log(
+        `[pipeline]   NOTE: ${name} matches the service-name pattern but lacks service-inventory columns (found ${cls.colHits}/2) — treating it as a value-stream source.`,
+      );
     }
     if (args.sample && records.length > args.sample) {
       records = records.slice(0, args.sample);
