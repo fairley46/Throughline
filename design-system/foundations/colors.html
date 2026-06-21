@@ -1,0 +1,83 @@
+<!-- @dsCard group="Foundations" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Colors — Throughline DS</title>
+<style>
+:root {
+  --bg:#0b0f17; --panel:#141b2a; --panel2:#1b2438; --ink:#e7ecf5; --muted:#8b97ad;
+  --line:#26304a; --good:#16a34a; --warn:#d97706; --bad:#dc2626; --accent:#3b82f6;
+}
+* { box-sizing:border-box; }
+body { margin:0; font:14px/1.5 -apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--ink); padding:28px; }
+h1 { font-size:20px; margin:0 0 4px; }
+.note { color:var(--muted); font-size:12px; margin:4px 0 24px; }
+.section { margin:26px 0 12px; font-size:15px; font-weight:700; }
+.grid { display:flex; flex-wrap:wrap; gap:14px; }
+.swatch { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:0; min-width:170px; overflow:hidden; }
+.chip { height:64px; }
+.meta { padding:10px 14px; }
+.name { font-weight:700; font-size:13px; }
+.hex { color:var(--muted); font-size:12px; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; margin-top:2px; }
+.role { color:var(--muted); font-size:11px; margin-top:2px; }
+</style>
+</head>
+<body>
+<h1>Colors</h1>
+<div class="note">The Throughline dashboard palette — pulled verbatim from the STYLE :root tokens, plus the visualization-specific colors used in the Flow and Connections SVGs.</div>
+
+<div class="section">Background &amp; surface</div>
+<div class="grid">
+  <div class="swatch"><div class="chip" style="background:#0b0f17"></div><div class="meta"><div class="name">--bg</div><div class="hex">#0b0f17</div><div class="role">page background</div></div></div>
+  <div class="swatch"><div class="chip" style="background:#141b2a"></div><div class="meta"><div class="name">--panel</div><div class="hex">#141b2a</div><div class="role">cards, tables, viz backdrop</div></div></div>
+  <div class="swatch"><div class="chip" style="background:#1b2438"></div><div class="meta"><div class="name">--panel2</div><div class="hex">#1b2438</div><div class="role">active tab, table head</div></div></div>
+  <div class="swatch"><div class="chip" style="background:#26304a"></div><div class="meta"><div class="name">--line</div><div class="hex">#26304a</div><div class="role">borders, dividers</div></div></div>
+</div>
+
+<div class="section">Text</div>
+<div class="grid">
+  <div class="swatch"><div class="chip" style="background:#e7ecf5"></div><div class="meta"><div class="name">--ink</div><div class="hex">#e7ecf5</div><div class="role">primary text</div></div></div>
+  <div class="swatch"><div class="chip" style="background:#8b97ad"></div><div class="meta"><div class="name">--muted</div><div class="hex">#8b97ad</div><div class="role">notes, labels, secondary</div></div></div>
+</div>
+
+<div class="section">Semantic / status</div>
+<div class="grid">
+  <div class="swatch"><div class="chip" style="background:#16a34a"></div><div class="meta"><div class="name">--good</div><div class="hex">#16a34a</div><div class="role">reconstructed segment</div></div></div>
+  <div class="swatch"><div class="chip" style="background:#d97706"></div><div class="meta"><div class="name">--warn</div><div class="hex">#d97706</div><div class="role">inferred, warnings</div></div></div>
+  <div class="swatch"><div class="chip" style="background:#dc2626"></div><div class="meta"><div class="name">--bad</div><div class="hex">#dc2626</div><div class="role">could-not-connect, orphan</div></div></div>
+  <div class="swatch"><div class="chip" style="background:#3b82f6"></div><div class="meta"><div class="name">--accent</div><div class="hex">#3b82f6</div><div class="role">links, journey-flow edges</div></div></div>
+</div>
+
+<div class="section">Provenance text tints (on tinted pills)</div>
+<div class="grid">
+  <div class="swatch"><div class="chip" style="background:#5ee08a"></div><div class="meta"><div class="name">recon green</div><div class="hex">#5ee08a</div><div class="role">.p-recon text, Tier-1 link</div></div></div>
+  <div class="swatch"><div class="chip" style="background:#f0b860"></div><div class="meta"><div class="name">inferred amber</div><div class="hex">#f0b860</div><div class="role">.p-inf text, Tier-2 link</div></div></div>
+  <div class="swatch"><div class="chip" style="background:#f08a8a"></div><div class="meta"><div class="name">orphan red</div><div class="hex">#f08a8a</div><div class="role">.p-orph text</div></div></div>
+</div>
+
+<div class="section">Visualization colors</div>
+<div class="grid">
+  <div class="swatch"><div class="chip" style="background:#3b82f6"></div><div class="meta"><div class="name">flow edge</div><div class="hex">#3b82f6</div><div class="role">journey-flow edges (Flow)</div></div></div>
+  <div class="swatch"><div class="chip" style="background:#f97316"></div><div class="meta"><div class="name">bottleneck orange</div><div class="hex">#f97316</div><div class="role">unowned-time seam + ↻ rework badge</div></div></div>
+  <div class="swatch"><div class="chip" style="background:#5ee08a"></div><div class="meta"><div class="name">Tier-1 link</div><div class="hex">#5ee08a</div><div class="role">solid deterministic link</div></div></div>
+  <div class="swatch"><div class="chip" style="background:#f0b860"></div><div class="meta"><div class="name">Tier-2 link</div><div class="hex">#f0b860</div><div class="role">dashed probabilistic link</div></div></div>
+  <div class="swatch"><div class="chip" style="background:#8b97ad"></div><div class="meta"><div class="name">edge label</div><div class="hex">#8b97ad</div><div class="role">transition count text</div></div></div>
+</div>
+
+<div class="section">Source palette (Connections node colors)</div>
+<div class="grid">
+  <div class="swatch"><div class="chip" style="background:#3b82f6"></div><div class="meta"><div class="hex">#3b82f6</div></div></div>
+  <div class="swatch"><div class="chip" style="background:#22c55e"></div><div class="meta"><div class="hex">#22c55e</div></div></div>
+  <div class="swatch"><div class="chip" style="background:#eab308"></div><div class="meta"><div class="hex">#eab308</div></div></div>
+  <div class="swatch"><div class="chip" style="background:#ec4899"></div><div class="meta"><div class="hex">#ec4899</div></div></div>
+  <div class="swatch"><div class="chip" style="background:#06b6d4"></div><div class="meta"><div class="hex">#06b6d4</div></div></div>
+  <div class="swatch"><div class="chip" style="background:#f97316"></div><div class="meta"><div class="hex">#f97316</div></div></div>
+  <div class="swatch"><div class="chip" style="background:#a855f7"></div><div class="meta"><div class="hex">#a855f7</div></div></div>
+  <div class="swatch"><div class="chip" style="background:#14b8a6"></div><div class="meta"><div class="hex">#14b8a6</div></div></div>
+  <div class="swatch"><div class="chip" style="background:#ef4444"></div><div class="meta"><div class="hex">#ef4444</div></div></div>
+  <div class="swatch"><div class="chip" style="background:#84cc16"></div><div class="meta"><div class="hex">#84cc16</div></div></div>
+</div>
+</body>
+</html>

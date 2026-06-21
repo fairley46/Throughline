@@ -1,0 +1,51 @@
+<!-- @dsCard group="Foundations" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Typography — Throughline DS</title>
+<style>
+:root {
+  --bg:#0b0f17; --panel:#141b2a; --panel2:#1b2438; --ink:#e7ecf5; --muted:#8b97ad;
+  --line:#26304a; --accent:#3b82f6;
+}
+* { box-sizing:border-box; }
+/* base body font is the product's: 14px/1.5 system sans */
+body { margin:0; font:14px/1.5 -apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--ink); padding:28px; }
+.intro { color:var(--muted); font-size:12px; margin-bottom:24px; }
+.row { border-bottom:1px solid var(--line); padding:16px 0; display:flex; gap:24px; align-items:baseline; }
+.spec { color:var(--muted); font-size:11px; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; min-width:230px; }
+
+/* actual product type roles, lifted from STYLE */
+.t-h1 { margin:0; font-size:20px; }                                   /* h1 */
+.t-sub { color:var(--muted); font-size:13px; }                        /* .sub */
+.t-tab { font-weight:600; color:var(--ink); }                         /* .tab */
+.t-section { font-size:15px; font-weight:700; }                       /* .section */
+.t-card-k { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.04em; } /* .card .k */
+.t-card-v { font-size:22px; font-weight:700; }                        /* .card .v */
+.t-table { font-size:13px; }                                          /* table */
+.t-th { color:var(--muted); font-weight:600; font-size:13px; }        /* th */
+.t-note { color:var(--muted); font-size:12px; }                       /* .note */
+.t-pill { font-size:11px; font-weight:700; }                          /* .pill */
+.t-mono { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12px; } /* .mono */
+.t-drillhead { font-size:18px; }                                      /* .drill-head */
+</style>
+</head>
+<body>
+<div class="intro">One font family throughout: <code>-apple-system, Segoe UI, Roboto, sans-serif</code> at base 14px/1.5. Monospace roles use <code>ui-monospace, SFMono-Regular, Menlo</code>. Below is the full type scale by role, exactly as defined in STYLE.</div>
+
+<div class="row"><span class="spec">h1 · 20px</span><span class="t-h1">Throughline — value stream</span></div>
+<div class="row"><span class="spec">.drill-head · 18px</span><span class="t-drillhead">Stage drill-down</span></div>
+<div class="row"><span class="spec">.section · 15px / 700</span><span class="t-section">The honest ledger</span></div>
+<div class="row"><span class="spec">.sub · 13px / muted</span><span class="t-sub">vertical SMB · unit account · 4,210 events</span></div>
+<div class="row"><span class="spec">.tab · 14px / 600</span><span class="t-tab">Connections</span></div>
+<div class="row"><span class="spec">table / td · 13px</span><span class="t-table">Standard table body row text</span></div>
+<div class="row"><span class="spec">th · 13px / 600 / muted</span><span class="t-th">PROVENANCE</span></div>
+<div class="row"><span class="spec">.card .v · 22px / 700</span><span class="t-card-v">$48,200</span></div>
+<div class="row"><span class="spec">.card .k · 12px / upper / .04em</span><span class="t-card-k">Service spend / mo</span></div>
+<div class="row"><span class="spec">.note · 12px / muted</span><span class="t-note">Every journey classified by provenance.</span></div>
+<div class="row"><span class="spec">.pill · 11px / 700</span><span class="t-pill">RECONSTRUCTED</span></div>
+<div class="row"><span class="spec">.mono · 12px / mono</span><span class="t-mono">evt_8f3a91 → evt_22b0c4</span></div>
+</body>
+</html>

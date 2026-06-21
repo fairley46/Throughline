@@ -1,0 +1,99 @@
+<!-- @dsCard group="Visualizations" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flow diagram — Throughline DS</title>
+<style>
+:root { --bg:#0b0f17; --panel:#141b2a; --panel2:#1b2438; --ink:#e7ecf5; --muted:#8b97ad; --line:#26304a; }
+* { box-sizing:border-box; }
+body { margin:0; font:14px/1.5 -apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--ink); padding:28px; }
+.section { margin:0 0 10px; font-size:15px; font-weight:700; }
+.note { color:var(--muted); font-size:12px; margin:4px 0 14px; }
+.viz { overflow-x:auto; border:1px solid var(--line); border-radius:12px; background:var(--panel); padding:12px; }
+.kvs { display:flex; gap:18px; flex-wrap:wrap; color:var(--muted); font-size:12px; margin-top:14px; }
+.legend-line { display:inline-block; width:22px; height:3px; border-radius:2px; margin-right:6px; vertical-align:middle; }
+</style>
+</head>
+<body>
+<div class="section">The operating floor — value stream, left to right</div>
+<div class="note">One node per stage. Edge thickness = how many journeys make that transition. Orange edges and labels are bottleneck seams: time nobody owns, median unowned shown. A ↻ badge marks a stage that journeys churn inside before moving on. (Static representative sample — geometry matches flowView: NW 150, NH 86, GAP 96.)</div>
+
+<div class="viz">
+<!-- W = 28*2 + 5*150 + 4*96 = 1190 ; H = 96 + 86 + 120 = 302 ; nodeY = 96 -->
+<svg viewBox="0 0 1190 302" width="100%" style="min-width:1190px" font-family="-apple-system,Segoe UI,Roboto,sans-serif">
+  <!-- ===== EDGES (drawn under nodes) ===== -->
+  <!-- node right edge x: 28 + i*246 + 150 ; node left x: 28 + i*246 ; centerY = 96+43 = 139 -->
+
+  <!-- Lead -> Qualification : 420 journeys (thick blue) -->
+  <path d="M 178 139 C 239 139, 239 139, 274 139" fill="none" stroke="#3b82f6" stroke-width="11.0" stroke-opacity="0.55" stroke-linecap="round"/>
+  <text x="251" y="129" text-anchor="middle" fill="#8b97ad" font-size="10">420</text>
+
+  <!-- Qualification -> Proposal : BOTTLENECK orange, labeled days -->
+  <path d="M 424 139 C 485 139, 485 139, 520 139" fill="none" stroke="#f97316" stroke-width="8.5" stroke-opacity="0.95" stroke-linecap="round"/>
+  <text x="497" y="129" text-anchor="middle" fill="#f97316" font-size="11" font-weight="700">6.4d · 188×</text>
+
+  <!-- Proposal -> Closed Won : 240 journeys -->
+  <path d="M 670 139 C 731 139, 731 139, 766 139" fill="none" stroke="#3b82f6" stroke-width="7.0" stroke-opacity="0.55" stroke-linecap="round"/>
+  <text x="743" y="129" text-anchor="middle" fill="#8b97ad" font-size="10">240</text>
+
+  <!-- Closed Won -> Onboarding : 198 journeys -->
+  <path d="M 916 139 C 977 139, 977 139, 1012 139" fill="none" stroke="#3b82f6" stroke-width="6.0" stroke-opacity="0.55" stroke-linecap="round"/>
+  <text x="989" y="129" text-anchor="middle" fill="#8b97ad" font-size="10">198</text>
+
+  <!-- backward edge: Proposal -> Qualification (rework loop), routed below -->
+  <!-- node centers x: Qual=397, Proposal=643 ; dip y = 96+86+64 = 246 -->
+  <path d="M 643 182 C 643 246, 397 246, 397 182" fill="none" stroke="#3b82f6" stroke-width="3.2" stroke-opacity="0.55" stroke-linecap="round"/>
+  <text x="520" y="250" text-anchor="middle" fill="#8b97ad" font-size="10">37</text>
+
+  <!-- ===== NODES ===== -->
+  <!-- i=0 Lead (x=28) -->
+  <g>
+    <rect x="28" y="96" width="150" height="86" rx="12" fill="#3b82f6" fill-opacity="0.92" stroke="#0b0f17" stroke-width="2"/>
+    <text x="103" y="124" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="700">Lead</text>
+    <text x="103" y="146" text-anchor="middle" fill="#ffffff" fill-opacity="0.92" font-size="11">512 events</text>
+    <text x="103" y="164" text-anchor="middle" fill="#ffffff" fill-opacity="0.92" font-size="11">470 journeys</text>
+  </g>
+  <!-- i=1 Qualification (x=274) -->
+  <g>
+    <rect x="274" y="96" width="150" height="86" rx="12" fill="#22c55e" fill-opacity="0.92" stroke="#0b0f17" stroke-width="2"/>
+    <text x="349" y="124" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="700">Qualification</text>
+    <text x="349" y="146" text-anchor="middle" fill="#ffffff" fill-opacity="0.92" font-size="11">642 events</text>
+    <text x="349" y="164" text-anchor="middle" fill="#ffffff" fill-opacity="0.92" font-size="11">418 journeys</text>
+  </g>
+  <!-- i=2 Proposal (x=520) — with rework badge -->
+  <g>
+    <rect x="520" y="96" width="150" height="86" rx="12" fill="#eab308" fill-opacity="0.92" stroke="#0b0f17" stroke-width="2"/>
+    <text x="595" y="124" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="700">Proposal</text>
+    <text x="595" y="146" text-anchor="middle" fill="#ffffff" fill-opacity="0.92" font-size="11">390 events</text>
+    <text x="595" y="164" text-anchor="middle" fill="#ffffff" fill-opacity="0.92" font-size="11">277 journeys</text>
+    <g>
+      <circle cx="660" cy="106" r="9" fill="#f97316" stroke="#0b0f17" stroke-width="1.5"/>
+      <text x="660" y="110" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">↻</text>
+    </g>
+  </g>
+  <!-- i=3 Closed Won (x=766) -->
+  <g>
+    <rect x="766" y="96" width="150" height="86" rx="12" fill="#a855f7" fill-opacity="0.92" stroke="#0b0f17" stroke-width="2"/>
+    <text x="841" y="124" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="700">Closed Won</text>
+    <text x="841" y="146" text-anchor="middle" fill="#ffffff" fill-opacity="0.92" font-size="11">240 events</text>
+    <text x="841" y="164" text-anchor="middle" fill="#ffffff" fill-opacity="0.92" font-size="11">228 journeys</text>
+  </g>
+  <!-- i=4 Onboarding (x=1012) -->
+  <g>
+    <rect x="1012" y="96" width="150" height="86" rx="12" fill="#14b8a6" fill-opacity="0.92" stroke="#0b0f17" stroke-width="2"/>
+    <text x="1087" y="124" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="700">Onboarding</text>
+    <text x="1087" y="146" text-anchor="middle" fill="#ffffff" fill-opacity="0.92" font-size="11">198 events</text>
+    <text x="1087" y="164" text-anchor="middle" fill="#ffffff" fill-opacity="0.92" font-size="11">187 journeys</text>
+  </g>
+</svg>
+</div>
+
+<div class="kvs">
+  <span><span class="legend-line" style="background:#3b82f6"></span> journey flow (thicker = more journeys)</span>
+  <span><span class="legend-line" style="background:#f97316"></span> bottleneck seam (unowned time)</span>
+  <span>↻ in-stage rework seam</span>
+</div>
+</body>
+</html>

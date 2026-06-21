@@ -1,0 +1,55 @@
+<!-- @dsCard group="Foundations" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spacing &amp; radius — Throughline DS</title>
+<style>
+:root { --bg:#0b0f17; --panel:#141b2a; --panel2:#1b2438; --ink:#e7ecf5; --muted:#8b97ad; --line:#26304a; --accent:#3b82f6; }
+* { box-sizing:border-box; }
+body { margin:0; font:14px/1.5 -apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--ink); padding:28px; }
+.note { color:var(--muted); font-size:12px; margin:4px 0 24px; }
+.section { margin:26px 0 12px; font-size:15px; font-weight:700; }
+.grid { display:flex; flex-wrap:wrap; gap:18px; }
+.tok { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:14px 18px; min-width:200px; }
+.tok .lbl { font-size:12px; color:var(--muted); font-family:ui-monospace,Menlo,monospace; }
+.tok .demo { margin-top:10px; }
+.spacer { background:var(--accent); height:14px; border-radius:3px; }
+.radius-box { width:80px; height:50px; background:var(--panel2); border:1px solid var(--line); }
+.padbox { background:var(--panel2); border:1px dashed var(--accent); display:inline-block; }
+.padbox span { display:block; background:var(--panel); }
+</style>
+</head>
+<body>
+<div class="note">Spacing and radius tokens used across the dashboard's cards, sections, tables, pills and panels. These are the literal values in STYLE — there is no abstract scale; the product uses these px values directly.</div>
+
+<div class="section">Border radius</div>
+<div class="grid">
+  <div class="tok"><div class="lbl">3px — stage-dot</div><div class="demo"><div class="radius-box" style="border-radius:3px"></div></div></div>
+  <div class="tok"><div class="lbl">4px — .bar</div><div class="demo"><div class="radius-box" style="border-radius:4px"></div></div></div>
+  <div class="tok"><div class="lbl">8px — .tab, .ledger-bar, .drill-close</div><div class="demo"><div class="radius-box" style="border-radius:8px"></div></div></div>
+  <div class="tok"><div class="lbl">10px — details</div><div class="demo"><div class="radius-box" style="border-radius:10px"></div></div></div>
+  <div class="tok"><div class="lbl">12px — .card, viz container</div><div class="demo"><div class="radius-box" style="border-radius:12px"></div></div></div>
+  <div class="tok"><div class="lbl">999px — .pill</div><div class="demo"><div class="radius-box" style="border-radius:999px;width:50px"></div></div></div>
+</div>
+
+<div class="section">Spacing primitives</div>
+<div class="grid">
+  <div class="tok"><div class="lbl">6px — tab gap, dot margin</div><div class="demo"><div class="spacer" style="width:6px"></div></div></div>
+  <div class="tok"><div class="lbl">8–10px — table cell padding</div><div class="demo"><div class="spacer" style="width:10px"></div></div></div>
+  <div class="tok"><div class="lbl">14px — .cards gap</div><div class="demo"><div class="spacer" style="width:14px"></div></div></div>
+  <div class="tok"><div class="lbl">18px — .kvs gap</div><div class="demo"><div class="spacer" style="width:18px"></div></div></div>
+  <div class="tok"><div class="lbl">28px — page horizontal padding</div><div class="demo"><div class="spacer" style="width:28px"></div></div></div>
+</div>
+
+<div class="section">Container padding (real components)</div>
+<div class="grid">
+  <div class="tok"><div class="lbl">.card · 14px 18px</div><div class="demo"><span class="padbox" style="padding:14px 18px"><span style="padding:8px 14px">card body</span></span></div></div>
+  <div class="tok"><div class="lbl">.tab · 8px 14px</div><div class="demo"><span class="padbox" style="padding:8px 14px"><span style="padding:4px 8px">tab</span></span></div></div>
+  <div class="tok"><div class="lbl">.view · 24px 28px</div><div class="demo"><span class="padbox" style="padding:24px 28px"><span style="padding:6px 10px">view</span></span></div></div>
+  <div class="tok"><div class="lbl">.pill · 2px 8px</div><div class="demo"><span class="padbox" style="padding:2px 8px;border-radius:999px"><span style="padding:0 6px">pill</span></span></div></div>
+  <div class="tok"><div class="lbl">.drill-panel · 20px 24px 60px</div><div class="demo"><span class="padbox" style="padding:20px 24px 60px"><span style="padding:6px 10px">panel</span></span></div></div>
+</div>
+</body>
+</html>

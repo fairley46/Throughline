@@ -1,0 +1,44 @@
+<!-- @dsCard group="Components" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Section &amp; card container — Throughline DS</title>
+<style>
+:root { --bg:#0b0f17; --panel:#141b2a; --panel2:#1b2438; --ink:#e7ecf5; --muted:#8b97ad; --line:#26304a; --bad:#dc2626; }
+* { box-sizing:border-box; }
+body { margin:0; font:14px/1.5 -apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--ink); padding:28px; }
+/* verbatim from STYLE */
+.section { margin:26px 0 10px; font-size:15px; font-weight:700; }
+.section.bad { color:var(--bad); }
+.note { color:var(--muted); font-size:12px; margin:4px 0 14px; }
+.cards { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:20px; }
+.card { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:14px 18px; min-width:150px; }
+.card .k { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.04em; }
+.card .v { font-size:22px; font-weight:700; margin-top:4px; }
+.card .v.bad { color:var(--bad); }
+.k.good { color:#5ee08a; } .k.warn { color:#f0b860; } .k.bad { color:#f08a8a; }
+</style>
+</head>
+<body>
+<div class="note" style="margin-top:0">The section header + the metric-card container that opens nearly every view. A section is a plain bold label (and a .bad red variant for warnings); a .cards row holds stat cards with an uppercase .k label and large .v value.</div>
+
+<div class="section">The honest ledger</div>
+<div class="note">Section header (default) followed by its explanatory note.</div>
+<div class="cards">
+  <div class="card"><div class="k">Journeys</div><div class="v">1,284</div></div>
+  <div class="card"><div class="k good">Reconstructed</div><div class="v">912</div></div>
+  <div class="card"><div class="k warn">Inferred</div><div class="v">281</div></div>
+  <div class="card"><div class="k bad">Could-not-connect</div><div class="v">91</div></div>
+  <div class="card"><div class="k">End-to-end median</div><div class="v">7.4d</div></div>
+</div>
+
+<div class="section bad">Spend flowing into gaps: $12,400/mo</div>
+<div class="note">Section header, .bad variant — used for honesty/warning headers.</div>
+<div class="cards">
+  <div class="card"><div class="k">Total spend/mo</div><div class="v">$48,200</div></div>
+  <div class="card"><div class="k bad">Spend in gaps/mo</div><div class="v bad">$12,400</div></div>
+</div>
+</body>
+</html>

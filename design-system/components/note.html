@@ -1,0 +1,31 @@
+<!-- @dsCard group="Components" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Note / honesty callout — Throughline DS</title>
+<style>
+:root { --bg:#0b0f17; --panel:#141b2a; --panel2:#1b2438; --ink:#e7ecf5; --muted:#8b97ad; --line:#26304a; --warn:#d97706; }
+* { box-sizing:border-box; }
+body { margin:0; font:14px/1.5 -apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--ink); padding:28px; }
+.section { margin:26px 0 10px; font-size:15px; font-weight:700; }
+/* verbatim from STYLE */
+.note { color:var(--muted); font-size:12px; margin:4px 0 14px; }
+.note.warn { color:var(--warn); }
+.warn { color:var(--warn); }
+</style>
+</head>
+<body>
+<div class="section" style="margin-top:0">.note — explanatory / honesty callout</div>
+<div class="note">Every journey classified by provenance. We are explicit about what is known vs. guessed. Click a journey to drill into its events.</div>
+
+<div class="section">.note as empty state</div>
+<div class="note">No interval seams above the noise floor.</div>
+<div class="note">No service maps to this stage.</div>
+<div class="note">No links (orphan / single-event journey).</div>
+
+<div class="section">.note.warn — truncation / sampling honesty</div>
+<div class="note warn">Showing the 14 largest journeys of 318. 304 smaller journeys are not drawn here — see the Ledger tab for the full list.</div>
+</body>
+</html>

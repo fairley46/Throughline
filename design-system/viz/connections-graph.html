@@ -1,0 +1,89 @@
+<!-- @dsCard group="Visualizations" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connections graph — Throughline DS</title>
+<style>
+:root { --bg:#0b0f17; --panel:#141b2a; --panel2:#1b2438; --ink:#e7ecf5; --muted:#8b97ad; --line:#26304a; }
+* { box-sizing:border-box; }
+body { margin:0; font:14px/1.5 -apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--ink); padding:28px; }
+.section { margin:0 0 10px; font-size:15px; font-weight:700; }
+.note { color:var(--muted); font-size:12px; margin:4px 0 14px; }
+.viz { overflow-x:auto; border:1px solid var(--line); border-radius:12px; background:var(--panel); padding:12px; }
+.kvs { display:flex; gap:18px; flex-wrap:wrap; color:var(--muted); font-size:12px; margin:6px 0 12px; }
+.legend-line { display:inline-block; width:22px; height:3px; border-radius:2px; margin-right:6px; vertical-align:middle; }
+.legend-dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; vertical-align:middle; }
+</style>
+</head>
+<body>
+<div class="section">Reconciliation — how records across systems become one journey</div>
+<div class="note">Each row is a journey; each dot is a source record placed at its stage. Dot color = the source system it came from, so a row spanning many colors is the cross-system linkage made visible. Solid green links are Tier-1 deterministic (shared key); dashed amber are Tier-2 probabilistic (composite evidence) — opacity tracks confidence. (Static representative sample — geometry matches connectionsView: COLX 168, ROWH 64, R 9.)</div>
+
+<div class="kvs">
+  <span><span class="legend-line" style="background:#5ee08a"></span> Tier-1 deterministic (solid)</span>
+  <span><span class="legend-line" style="background:#f0b860;height:0;border-top:2px dashed #f0b860"></span> Tier-2 probabilistic (dashed)</span>
+</div>
+
+<div class="viz">
+<!-- 4 stages: colX(i) = 150 + i*168 -> 150, 318, 486, 654 ; W = 150 + 4*168 + 40 = 862 -->
+<!-- 3 rows: rowY(r) = 56 + r*64 + 32 -> 88, 152, 216 ; H = 56 + 3*64 + 30 = 278 -->
+<svg viewBox="0 0 862 278" width="100%" style="min-width:862px" font-family="-apple-system,Segoe UI,Roboto,sans-serif">
+  <!-- stage column guide lines + headers -->
+  <line x1="150" y1="38" x2="150" y2="264" stroke="#3b82f6" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="150" y="30" text-anchor="middle" fill="#3b82f6" font-size="11" font-weight="700">Lead</text>
+  <line x1="318" y1="38" x2="318" y2="264" stroke="#22c55e" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="318" y="30" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">Qualification</text>
+  <line x1="486" y1="38" x2="486" y2="264" stroke="#eab308" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="486" y="30" text-anchor="middle" fill="#eab308" font-size="11" font-weight="700">Proposal</text>
+  <line x1="654" y1="38" x2="654" y2="264" stroke="#a855f7" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="654" y="30" text-anchor="middle" fill="#a855f7" font-size="11" font-weight="700">Closed Won</text>
+
+  <!-- ===== ROW 0 (y=88): reconstructed, full chain, Tier-1 links ===== -->
+  <text x="12" y="92" fill="#5ee08a" font-size="11" font-family="ui-monospace,Menlo,monospace">acct_8f3a91</text>
+  <!-- links (under nodes): solid green Tier-1 -->
+  <path d="M 150 88 C 234 88, 234 88, 318 88" fill="none" stroke="#5ee08a" stroke-width="2" stroke-opacity="0.84"/>
+  <path d="M 318 88 C 402 88, 402 88, 486 88" fill="none" stroke="#5ee08a" stroke-width="2" stroke-opacity="0.90"/>
+  <path d="M 486 88 C 570 88, 570 88, 654 88" fill="none" stroke="#5ee08a" stroke-width="2" stroke-opacity="0.78"/>
+  <!-- nodes colored by source -->
+  <circle cx="150" cy="88" r="9" fill="#3b82f6" stroke="#0b0f17" stroke-width="2"/>
+  <circle cx="318" cy="88" r="9" fill="#22c55e" stroke="#0b0f17" stroke-width="2"/>
+  <circle cx="486" cy="88" r="9" fill="#ec4899" stroke="#0b0f17" stroke-width="2"/>
+  <circle cx="654" cy="88" r="9" fill="#06b6d4" stroke="#0b0f17" stroke-width="2"/>
+
+  <!-- ===== ROW 1 (y=152): inferred, Tier-2 dashed amber link ===== -->
+  <text x="12" y="156" fill="#f0b860" font-size="11" font-family="ui-monospace,Menlo,monospace">acct_22b0c4</text>
+  <path d="M 150 152 C 234 152, 234 152, 318 152" fill="none" stroke="#5ee08a" stroke-width="2" stroke-opacity="0.80"/>
+  <path d="M 318 152 C 402 152, 402 152, 486 152" fill="none" stroke="#f0b860" stroke-width="1.6" stroke-opacity="0.62" stroke-dasharray="5 4"/>
+  <circle cx="150" cy="152" r="9" fill="#3b82f6" stroke="#0b0f17" stroke-width="2"/>
+  <circle cx="318" cy="152" r="9" fill="#f97316" stroke="#0b0f17" stroke-width="2"/>
+  <circle cx="486" cy="152" r="9" fill="#eab308" stroke="#0b0f17" stroke-width="2"/>
+
+  <!-- ===== ROW 2 (y=216): mixed, with fan-out on one stage ===== -->
+  <text x="12" y="220" fill="#5ee08a" font-size="11" font-family="ui-monospace,Menlo,monospace">acct_91c0aa</text>
+  <!-- fan: two events share Qualification stage (y 203 and 216) -->
+  <path d="M 150 216 C 234 216, 234 203, 318 203" fill="none" stroke="#5ee08a" stroke-width="2" stroke-opacity="0.86"/>
+  <path d="M 318 203 C 402 203, 402 216, 486 216" fill="none" stroke="#f0b860" stroke-width="1.6" stroke-opacity="0.70" stroke-dasharray="5 4"/>
+  <path d="M 486 216 C 570 216, 570 216, 654 216" fill="none" stroke="#5ee08a" stroke-width="2" stroke-opacity="0.88"/>
+  <circle cx="150" cy="216" r="9" fill="#a855f7" stroke="#0b0f17" stroke-width="2"/>
+  <circle cx="318" cy="203" r="9" fill="#22c55e" stroke="#0b0f17" stroke-width="2"/>
+  <circle cx="318" cy="216" r="9" fill="#14b8a6" stroke="#0b0f17" stroke-width="2"/>
+  <circle cx="486" cy="216" r="9" fill="#eab308" stroke="#0b0f17" stroke-width="2"/>
+  <circle cx="654" cy="216" r="9" fill="#06b6d4" stroke="#0b0f17" stroke-width="2"/>
+</svg>
+</div>
+
+<div class="section" style="margin-top:22px">Source systems</div>
+<div class="kvs">
+  <span><span class="legend-dot" style="background:#3b82f6"></span>crm</span>
+  <span><span class="legend-dot" style="background:#22c55e"></span>calendar</span>
+  <span><span class="legend-dot" style="background:#eab308"></span>billing</span>
+  <span><span class="legend-dot" style="background:#ec4899"></span>email</span>
+  <span><span class="legend-dot" style="background:#06b6d4"></span>support</span>
+  <span><span class="legend-dot" style="background:#f97316"></span>forms</span>
+  <span><span class="legend-dot" style="background:#a855f7"></span>ads</span>
+  <span><span class="legend-dot" style="background:#14b8a6"></span>product</span>
+</div>
+</body>
+</html>

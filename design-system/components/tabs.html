@@ -1,0 +1,32 @@
+<!-- @dsCard group="Components" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tabs — Throughline DS</title>
+<style>
+:root { --bg:#0b0f17; --panel:#141b2a; --panel2:#1b2438; --ink:#e7ecf5; --muted:#8b97ad; --line:#26304a; }
+* { box-sizing:border-box; }
+body { margin:0; font:14px/1.5 -apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--ink); padding:28px; }
+.note { color:var(--muted); font-size:12px; margin:0 0 18px; }
+/* lifted verbatim from STYLE */
+.tabs { display:flex; gap:6px; padding:14px 28px 0; border-bottom:1px solid var(--line); flex-wrap:wrap; }
+.tab { padding:8px 14px; border:1px solid var(--line); border-bottom:none; border-radius:8px 8px 0 0;
+  background:var(--panel); color:var(--muted); cursor:pointer; font-weight:600; }
+.tab.active { background:var(--panel2); color:var(--ink); }
+</style>
+</head>
+<body>
+<div class="note">The dashboard's top tab nav. The active tab raises to --panel2 with --ink text; inactive tabs sit on --panel with --muted text. The full bar from buildTabs() is shown below.</div>
+<div class="tabs">
+  <div class="tab active" data-view="v-ledger">Ledger</div>
+  <div class="tab" data-view="v-flow">Flow</div>
+  <div class="tab" data-view="v-connections">Connections</div>
+  <div class="tab" data-view="v-stage">Stages &amp; cost</div>
+  <div class="tab" data-view="v-service">Service architecture</div>
+  <div class="tab" data-view="v-gaps">Gaps &amp; spend-in-gaps</div>
+  <div class="tab" data-view="v-event">Events</div>
+</div>
+</body>
+</html>

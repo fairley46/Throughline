@@ -1,0 +1,58 @@
+<!-- @dsCard group="Components" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Badges &amp; pills — Throughline DS</title>
+<style>
+:root { --bg:#0b0f17; --panel:#141b2a; --panel2:#1b2438; --ink:#e7ecf5; --muted:#8b97ad; --line:#26304a; --good:#16a34a; --warn:#d97706; --bad:#dc2626; --accent:#3b82f6; }
+* { box-sizing:border-box; }
+body { margin:0; font:14px/1.5 -apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--ink); padding:28px; }
+.note { color:var(--muted); font-size:12px; margin:4px 0 14px; }
+.section { margin:26px 0 10px; font-size:15px; font-weight:700; }
+.row { display:flex; gap:14px; flex-wrap:wrap; align-items:center; margin-bottom:8px; }
+/* provenance pills — verbatim from STYLE */
+.pill { display:inline-block; padding:2px 8px; border-radius:999px; font-size:11px; font-weight:700; }
+.p-recon { background:rgba(22,163,74,.18); color:#5ee08a; }
+.p-inf { background:rgba(217,119,6,.18); color:#f0b860; }
+.p-orph { background:rgba(220,38,38,.18); color:#f08a8a; }
+/* tier badges — verbatim */
+.tier1 { color:#5ee08a; } .tier2 { color:#f0b860; }
+/* gap-type chips render as left-bordered table rows in product; shown here as chips */
+.gapchip { display:inline-block; padding:4px 10px; border-radius:6px; background:var(--panel); font-size:12px; font-weight:600; }
+.gap-orphan_service,.gap-orphan { border-left:3px solid var(--bad); }
+.gap-underutilized_service { border-left:3px solid var(--warn); }
+.gap-redundant_service { border-left:3px solid var(--accent); }
+.gap-interval_seam { border-left:3px solid var(--warn); }
+.warn { color:var(--warn); } .bad { color:var(--bad); } .good { color:var(--good); }
+</style>
+</head>
+<body>
+<div class="section" style="margin-top:0">Provenance pills</div>
+<div class="note">Classify each journey by how it was assembled. Used in the Ledger table and journey drill-down.</div>
+<div class="row">
+  <span class="pill p-recon">reconstructed</span>
+  <span class="pill p-inf">inferred</span>
+  <span class="pill p-orph">could-not-connect</span>
+</div>
+
+<div class="section">Link tier badges</div>
+<div class="note">Tier-1 deterministic vs Tier-2 probabilistic links holding a journey chain together.</div>
+<div class="row">
+  <span class="tier1">tier1_deterministic</span>
+  <span class="tier2">tier2_probabilistic</span>
+</div>
+
+<div class="section">Gap-type chips</div>
+<div class="note">Gap rows carry a left accent border keyed to gap type (.gap-* classes from STYLE).</div>
+<div class="row"><span class="gapchip gap-orphan_service">orphan_service</span></div>
+<div class="row"><span class="gapchip gap-underutilized_service">underutilized_service</span></div>
+<div class="row"><span class="gapchip gap-redundant_service">redundant_service</span></div>
+<div class="row"><span class="gapchip gap-interval_seam">interval_seam</span></div>
+
+<div class="section">Inline status text</div>
+<div class="note">Single-token status emphasis used in cells and headers.</div>
+<div class="row"><span class="good">good</span><span class="warn">⚠ single-vendor</span><span class="bad">orphan</span></div>
+</body>
+</html>

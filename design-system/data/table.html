@@ -1,0 +1,66 @@
+<!-- @dsCard group="Data" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data table — Throughline DS</title>
+<style>
+:root { --bg:#0b0f17; --panel:#141b2a; --panel2:#1b2438; --ink:#e7ecf5; --muted:#8b97ad; --line:#26304a; --good:#16a34a; --warn:#d97706; --bad:#dc2626; --accent:#3b82f6; }
+* { box-sizing:border-box; }
+body { margin:0; font:14px/1.5 -apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--ink); padding:28px; }
+.section { margin:26px 0 10px; font-size:15px; font-weight:700; }
+.note { color:var(--muted); font-size:12px; margin:4px 0 14px; }
+/* verbatim from STYLE */
+table { width:100%; border-collapse:collapse; font-size:13px; }
+th,td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+th { color:var(--muted); font-weight:600; position:sticky; top:0; background:var(--panel2); }
+tr:hover td { background:rgba(59,130,246,.06); }
+tr.clickable { cursor:pointer; }
+tr.clickable:hover td { background:rgba(59,130,246,.14); }
+.stage-dot { display:inline-block; width:10px; height:10px; border-radius:3px; margin-right:6px; vertical-align:middle; }
+.pill { display:inline-block; padding:2px 8px; border-radius:999px; font-size:11px; font-weight:700; }
+.p-recon { background:rgba(22,163,74,.18); color:#5ee08a; }
+.p-inf { background:rgba(217,119,6,.18); color:#f0b860; }
+.p-orph { background:rgba(220,38,38,.18); color:#f08a8a; }
+.note-inline { color:var(--muted); font-size:12px; }
+.mono { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12px; }
+.right { text-align:right; }
+.warn { color:var(--warn); }
+</style>
+</head>
+<body>
+<div class="section" style="margin-top:0">Standard data table</div>
+<div class="note">The table used by the Ledger, Stage, Service and Gaps views — sticky --muted headers, --line row dividers, accent-tinted hover. Clickable rows brighten on hover. Shown here with the Ledger view's columns (note the stage-dots and provenance pill).</div>
+
+<table>
+  <thead><tr><th>Entity</th><th>Provenance</th><th>Stages</th><th class="right">Conf.</th><th class="right">Links</th></tr></thead>
+  <tbody>
+    <tr class="clickable">
+      <td class="mono">acct_8f3a91</td>
+      <td><span class="pill p-recon">reconstructed</span></td>
+      <td><span class="stage-dot" style="background:#3b82f6"></span><span class="stage-dot" style="background:#22c55e"></span><span class="stage-dot" style="background:#a855f7"></span> <span class="note-inline">6 events</span></td>
+      <td class="right">0.94</td><td class="right">5</td>
+    </tr>
+    <tr class="clickable">
+      <td class="mono">acct_22b0c4</td>
+      <td><span class="pill p-inf">inferred</span></td>
+      <td><span class="stage-dot" style="background:#3b82f6"></span><span class="stage-dot" style="background:#eab308"></span> <span class="note-inline">3 events</span></td>
+      <td class="right">0.61</td><td class="right">2</td>
+    </tr>
+    <tr class="clickable">
+      <td class="mono">acct_5d71ef</td>
+      <td><span class="pill p-orph">could-not-connect</span></td>
+      <td><span class="stage-dot" style="background:#ec4899"></span> <span class="note-inline">1 event</span></td>
+      <td class="right">0.20</td><td class="right">0</td>
+    </tr>
+    <tr class="clickable">
+      <td class="mono">acct_91c0aa</td>
+      <td><span class="pill p-recon">reconstructed</span></td>
+      <td><span class="stage-dot" style="background:#3b82f6"></span><span class="stage-dot" style="background:#22c55e"></span><span class="stage-dot" style="background:#14b8a6"></span><span class="stage-dot" style="background:#a855f7"></span> <span class="note-inline">9 events</span></td>
+      <td class="right">0.97</td><td class="right">8</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>
