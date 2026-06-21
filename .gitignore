@@ -4,3 +4,6 @@ intermediate/
 .DS_Store
 *.log
 out/
+
+# TypeScript incremental build info
+*.tsbuildinfo
