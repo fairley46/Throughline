@@ -1,0 +1,5 @@
+{
+  "projectId": "019deb04-c6ab-7ee8-a925-f61e574e323b",
+  "shape": "none",
+  "note": "Throughline is an app (HTML-string view builders in packages/dashboard/views.mjs), NOT a compiled component library, so the design-sync converter does not apply. We sync hand-authored preview cards only; redesign happens visually in the Claude Design project and is ported back into views.mjs by hand."
+}
