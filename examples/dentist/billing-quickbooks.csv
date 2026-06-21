@@ -1,0 +1,5 @@
+invoice_no,treatment_plan_id,patient_name,patient_email,event,timestamp,total
+INV-5501,TP-1001,Maria Gonzalez,maria.g@gmail.com,invoice_issued,2025-02-25T09:00:00Z,1200
+INV-5540,TP-1042,Maria Gonzalez,maria.g@gmail.com,invoice_issued,2025-08-27T09:00:00Z,1450
+INV-5512,TP-1009,James Whitfield,jwhit@outlook.com,invoice_issued,2025-03-12T09:00:00Z,140
+INV-5520,TP-1015,Aisha Rahman,aisha.r@gmail.com,invoice_issued,2025-04-10T09:00:00Z,260

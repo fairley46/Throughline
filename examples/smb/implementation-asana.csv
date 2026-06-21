@@ -1,0 +1,35 @@
+project_id,deal_id,company,account_email,owner,event,timestamp
+PRJ-401,DEAL-2001,Northwind Logistics,ops@northwindlogistics.com,Sam Okoye,kickoff_scheduled,2025-02-03T09:00:00Z
+PRJ-401,DEAL-2001,Northwind Logistics,ops@northwindlogistics.com,Sam Okoye,go_live,2025-03-14T09:00:00Z
+PRJ-402,DEAL-2002,Northwind Logistics,ops@northwindlogistics.com,Sam Okoye,kickoff_scheduled,2025-07-01T09:00:00Z
+PRJ-402,DEAL-2002,Northwind Logistics,ops@northwindlogistics.com,Sam Okoye,go_live,2025-08-11T09:00:00Z
+PRJ-403,DEAL-2003,Brightwave Media,finance@brightwavemedia.io,Lena Brandt,kickoff_scheduled,2025-02-26T09:00:00Z
+PRJ-403,DEAL-2003,Brightwave Media,finance@brightwavemedia.io,Lena Brandt,go_live,2025-04-01T09:00:00Z
+PRJ-404,DEAL-2004,Cobalt Health,it@cobalthealth.com,Sam Okoye,kickoff_scheduled,2025-03-18T09:00:00Z
+PRJ-404,DEAL-2004,Cobalt Health,it@cobalthealth.com,Sam Okoye,go_live,2025-05-02T09:00:00Z
+PRJ-405,DEAL-2005,Harbor Freight Co,admin@harborfreightco.com,Lena Brandt,kickoff_scheduled,2025-03-24T09:00:00Z
+PRJ-405,DEAL-2005,Harbor Freight Co,admin@harborfreightco.com,Lena Brandt,go_live,2025-04-28T09:00:00Z
+PRJ-406,DEAL-2006,Quill & Quire SaaS,billing@quillquire.com,Sam Okoye,kickoff_scheduled,2025-04-07T09:00:00Z
+PRJ-406,DEAL-2006,Quill & Quire SaaS,billing@quillquire.com,Sam Okoye,go_live,2025-05-12T09:00:00Z
+PRJ-407,DEAL-2007,Vertex Robotics,procurement@vertexrobotics.com,Lena Brandt,kickoff_scheduled,2025-04-15T09:00:00Z
+PRJ-407,DEAL-2007,Vertex Robotics,procurement@vertexrobotics.com,Lena Brandt,go_live,2025-05-30T09:00:00Z
+PRJ-408,DEAL-2008,Maple Grove Retail,ops@maplegroveretail.com,Sam Okoye,kickoff_scheduled,2025-05-01T09:00:00Z
+PRJ-408,DEAL-2008,Maple Grove Retail,ops@maplegroveretail.com,Sam Okoye,go_live,2025-06-06T09:00:00Z
+PRJ-409,DEAL-2009,Sentinel Security,accounts@sentinelsecurity.com,Lena Brandt,kickoff_scheduled,2025-05-08T09:00:00Z
+PRJ-409,DEAL-2009,Sentinel Security,accounts@sentinelsecurity.com,Lena Brandt,go_live,2025-06-12T09:00:00Z
+PRJ-410,DEAL-2010,Pelican Bay Foods,finance@pelicanbayfoods.com,Sam Okoye,kickoff_scheduled,2025-05-29T09:00:00Z
+PRJ-410,DEAL-2010,Pelican Bay Foods,finance@pelicanbayfoods.com,Sam Okoye,go_live,2025-07-03T09:00:00Z
+PRJ-411,DEAL-2011,Ironclad Manufacturing,it@ironcladmfg.com,Lena Brandt,kickoff_scheduled,2025-06-04T09:00:00Z
+PRJ-411,DEAL-2011,Ironclad Manufacturing,it@ironcladmfg.com,Lena Brandt,go_live,2025-07-14T09:00:00Z
+PRJ-412,DEAL-2012,Lumen Analytics,ops@lumenanalytics.com,Sam Okoye,kickoff_scheduled,2025-06-17T09:00:00Z
+PRJ-412,DEAL-2012,Lumen Analytics,ops@lumenanalytics.com,Sam Okoye,go_live,2025-07-22T09:00:00Z
+PRJ-413,DEAL-2013,Cascade Outfitters,admin@cascadeoutfitters.com,Lena Brandt,kickoff_scheduled,2025-06-28T09:00:00Z
+PRJ-413,DEAL-2013,Cascade Outfitters,admin@cascadeoutfitters.com,Lena Brandt,go_live,2025-08-02T09:00:00Z
+PRJ-414,DEAL-2014,Trellis Software,billing@trellissoftware.com,Sam Okoye,kickoff_scheduled,2025-07-07T09:00:00Z
+PRJ-414,DEAL-2014,Trellis Software,billing@trellissoftware.com,Sam Okoye,go_live,2025-08-15T09:00:00Z
+PRJ-415,DEAL-2015,Anvil Energy,procurement@anvilenergy.com,Lena Brandt,kickoff_scheduled,2025-07-29T09:00:00Z
+PRJ-415,DEAL-2015,Anvil Energy,procurement@anvilenergy.com,Lena Brandt,go_live,2025-09-08T09:00:00Z
+PRJ-416,DEAL-2016,Driftwood Hospitality,finance@driftwoodhosp.com,Sam Okoye,kickoff_scheduled,2025-08-04T09:00:00Z
+PRJ-416,DEAL-2016,Driftwood Hospitality,finance@driftwoodhosp.com,Sam Okoye,go_live,2025-09-12T09:00:00Z
+PRJ-417,DEAL-2017,Granite Peak Consulting,ops@granitepeak.com,Lena Brandt,kickoff_scheduled,2025-08-11T09:00:00Z
+PRJ-417,DEAL-2017,Granite Peak Consulting,ops@granitepeak.com,Lena Brandt,go_live,2025-09-15T09:00:00Z

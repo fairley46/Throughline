@@ -1,0 +1,15 @@
+crm_account_id,opportunity_id,account_name,company_domain,email,owner,event,timestamp,amount
+HS-AC-5500,OPP-HS-3101,Globex Corp,globex.com,procurement@globex.com,Tom Becker,mql_created,2025-02-10T09:00:00Z,
+HS-AC-5500,OPP-HS-3101,Globex Corp,globex.com,procurement@globex.com,Tom Becker,opportunity_created,2025-02-24T09:00:00Z,72000
+HS-AC-5500,OPP-HS-3101,Globex Corp,globex.com,procurement@globex.com,Tom Becker,deal_won,2025-03-20T15:00:00Z,72000
+HS-AC-5500,OPP-HS-3119,Globex Corp,globex.com,ops@globex.com,Tom Becker,opportunity_created,2025-04-14T09:00:00Z,156000
+HS-AC-5500,OPP-HS-3119,Globex Corp,globex.com,ops@globex.com,Tom Becker,deal_won,2025-05-09T16:00:00Z,156000
+HS-AC-5501,OPP-HS-3127,Initech LLC,initech.com,buyer@initech.com,Lena Hoff,opportunity_created,2025-03-05T09:00:00Z,41000
+HS-AC-5501,OPP-HS-3127,Initech LLC,initech.com,buyer@initech.com,Lena Hoff,deal_won,2025-04-02T12:00:00Z,41000
+HS-AC-5502,OPP-HS-3140,Hooli Inc,hooli.com,vendors@hooli.com,Lena Hoff,mql_created,2025-04-22T09:00:00Z,
+HS-AC-5502,OPP-HS-3140,Hooli Inc,hooli.com,vendors@hooli.com,Lena Hoff,opportunity_created,2025-05-06T09:00:00Z,88000
+HS-AC-5502,OPP-HS-3140,Hooli Inc,hooli.com,vendors@hooli.com,Lena Hoff,deal_won,2025-06-04T14:00:00Z,88000
+HS-AC-5503,OPP-HS-3155,Wonka Logistics,wonka.co,procure@wonka.co,Tom Becker,opportunity_created,2025-05-18T09:00:00Z,67000
+HS-AC-5503,OPP-HS-3155,Wonka Logistics,wonka.co,procure@wonka.co,Tom Becker,deal_won,2025-06-16T13:00:00Z,67000
+HS-AC-5504,OPP-HS-3168,Umbrella Health,umbrellahealth.org,it@umbrellahealth.org,Lena Hoff,opportunity_created,2025-06-01T09:00:00Z,134000
+HS-AC-5504,OPP-HS-3168,Umbrella Health,umbrellahealth.org,it@umbrellahealth.org,Lena Hoff,deal_won,2025-06-28T15:00:00Z,134000

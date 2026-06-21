@@ -1,0 +1,9 @@
+service_id,name,category,vendor,cost_model,monthly_cost,seats,utilized_seats,stages_served,fte_roles
+SVC-01,Dentrix,practice_mgmt,Henry Schein,subscription_flat,450,8,6,booking|visit|treatment|recall,Front desk|Hygienist|Dentist
+SVC-02,QuickBooks Online,accounting,Intuit,subscription_flat,90,3,2,billing,Office manager
+SVC-03,Square,payments,Block,transaction_fee,120,,,payment,Front desk
+SVC-04,DentalXChange,clearinghouse,DentalXChange,subscription_flat,75,2,2,claim|insurance_verify,Office manager
+SVC-05,Weave VoIP,comms,Weave,subscription_per_seat,210,6,6,booking|recall,Front desk
+SVC-06,Solutionreach SMS,comms,Solutionreach,subscription_flat,99,,,recall,Front desk
+SVC-07,Adobe Creative Cloud,design,Adobe,subscription_per_seat,55,1,0,,
+SVC-08,Carestream Imaging,imaging,Carestream,subscription_flat,180,4,1,visit|treatment,Dentist|Hygienist

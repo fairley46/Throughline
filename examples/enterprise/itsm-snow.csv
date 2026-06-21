@@ -1,0 +1,15 @@
+ticket_id,order_id,company,contact_email,assignee,event,timestamp,priority
+INC-0091,DEAL-NS-9001,Globex Corp,procurement@globex.com,Sam Ortiz,incident_opened,2025-06-02T09:00:00Z,P2
+INC-0091,DEAL-NS-9001,Globex Corp,procurement@globex.com,Sam Ortiz,incident_resolved,2025-06-04T15:00:00Z,P2
+INC-0104,DEAL-NS-9001,Globex Corp,procurement@globex.com,Sam Ortiz,incident_opened,2025-07-19T09:00:00Z,P3
+INC-0104,DEAL-NS-9001,Globex Corp,procurement@globex.com,Sam Ortiz,incident_resolved,2025-07-22T15:00:00Z,P3
+INC-0120,DEAL-NS-9027,Globex Corp,ops@globex.com,Rae Kim,incident_opened,2025-09-22T09:00:00Z,P1
+INC-0120,DEAL-NS-9027,Globex Corp,ops@globex.com,Rae Kim,incident_resolved,2025-09-26T15:00:00Z,P1
+INC-0133,OPP-HS-3101,Globex Corp,procurement@globex.com,Sam Ortiz,incident_opened,2025-06-10T09:00:00Z,P3
+INC-0133,OPP-HS-3101,Globex Corp,procurement@globex.com,Sam Ortiz,incident_resolved,2025-06-12T15:00:00Z,P3
+INC-0145,DEAL-NS-9041,Soylent Industries,it@soylent.io,Rae Kim,incident_opened,2025-06-08T09:00:00Z,P2
+INC-0145,DEAL-NS-9041,Soylent Industries,it@soylent.io,Rae Kim,incident_resolved,2025-06-11T15:00:00Z,P2
+INC-0150,DEAL-NS-9052,Hooli Inc,vendors@hooli.com,Sam Ortiz,incident_opened,2025-10-20T09:00:00Z,P2
+INC-0150,DEAL-NS-9052,Hooli Inc,vendors@hooli.com,Sam Ortiz,incident_resolved,2025-10-24T15:00:00Z,P2
+INC-0161,OPP-HS-3168,Umbrella Health,it@umbrellahealth.org,Rae Kim,incident_opened,2025-09-05T09:00:00Z,P1
+INC-0161,OPP-HS-3168,Umbrella Health,it@umbrellahealth.org,Rae Kim,incident_resolved,2025-09-09T15:00:00Z,P1

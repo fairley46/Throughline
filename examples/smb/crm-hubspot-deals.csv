@@ -1,0 +1,37 @@
+deal_id,company,contact_email,deal_owner,event,timestamp,amount
+DEAL-2001,Northwind Logistics,ops@northwindlogistics.com,Priya Nair,deal_created,2025-01-08T14:00:00Z,
+DEAL-2001,Northwind Logistics,ops@northwindlogistics.com,Priya Nair,deal_won,2025-01-22T16:30:00Z,24000
+DEAL-2002,Northwind Logistics,ops@northwindlogistics.com,Priya Nair,deal_created,2025-06-03T11:00:00Z,
+DEAL-2002,Northwind Logistics,ops@northwindlogistics.com,Priya Nair,deal_won,2025-06-18T15:00:00Z,42000
+DEAL-2003,Brightwave Media,finance@brightwavemedia.io,Marco Reyes,deal_created,2025-02-02T09:30:00Z,
+DEAL-2003,Brightwave Media,finance@brightwavemedia.io,Marco Reyes,deal_won,2025-02-14T13:00:00Z,18000
+DEAL-2004,Cobalt Health,it@cobalthealth.com,Priya Nair,deal_created,2025-02-20T10:00:00Z,
+DEAL-2004,Cobalt Health,it@cobalthealth.com,Priya Nair,deal_won,2025-03-05T17:00:00Z,55000
+DEAL-2005,Harbor Freight Co,admin@harborfreightco.com,Dana Liu,deal_created,2025-03-01T08:45:00Z,
+DEAL-2005,Harbor Freight Co,admin@harborfreightco.com,Dana Liu,deal_won,2025-03-12T14:20:00Z,12000
+DEAL-2006,Quill & Quire SaaS,billing@quillquire.com,Marco Reyes,deal_created,2025-03-10T12:00:00Z,
+DEAL-2006,Quill & Quire SaaS,billing@quillquire.com,Marco Reyes,deal_won,2025-03-24T16:00:00Z,31000
+DEAL-2007,Vertex Robotics,procurement@vertexrobotics.com,Dana Liu,deal_created,2025-03-18T09:00:00Z,
+DEAL-2007,Vertex Robotics,procurement@vertexrobotics.com,Dana Liu,deal_won,2025-04-01T11:30:00Z,67000
+DEAL-2008,Maple Grove Retail,ops@maplegroveretail.com,Priya Nair,deal_created,2025-04-05T13:00:00Z,
+DEAL-2008,Maple Grove Retail,ops@maplegroveretail.com,Priya Nair,deal_won,2025-04-19T15:45:00Z,21000
+DEAL-2009,Sentinel Security,accounts@sentinelsecurity.com,Marco Reyes,deal_created,2025-04-12T10:30:00Z,
+DEAL-2009,Sentinel Security,accounts@sentinelsecurity.com,Marco Reyes,deal_won,2025-04-26T14:00:00Z,38000
+DEAL-2010,Pelican Bay Foods,finance@pelicanbayfoods.com,Dana Liu,deal_created,2025-05-02T09:15:00Z,
+DEAL-2010,Pelican Bay Foods,finance@pelicanbayfoods.com,Dana Liu,deal_won,2025-05-16T16:00:00Z,29000
+DEAL-2011,Ironclad Manufacturing,it@ironcladmfg.com,Priya Nair,deal_created,2025-05-08T11:00:00Z,
+DEAL-2011,Ironclad Manufacturing,it@ironcladmfg.com,Priya Nair,deal_won,2025-05-22T13:30:00Z,48000
+DEAL-2012,Lumen Analytics,ops@lumenanalytics.com,Marco Reyes,deal_created,2025-05-20T10:00:00Z,
+DEAL-2012,Lumen Analytics,ops@lumenanalytics.com,Marco Reyes,deal_won,2025-06-04T15:00:00Z,33000
+DEAL-2013,Cascade Outfitters,admin@cascadeoutfitters.com,Dana Liu,deal_created,2025-06-01T08:30:00Z,
+DEAL-2013,Cascade Outfitters,admin@cascadeoutfitters.com,Dana Liu,deal_won,2025-06-15T14:00:00Z,16000
+DEAL-2014,Trellis Software,billing@trellissoftware.com,Priya Nair,deal_created,2025-06-10T12:00:00Z,
+DEAL-2014,Trellis Software,billing@trellissoftware.com,Priya Nair,deal_won,2025-06-24T16:30:00Z,52000
+DEAL-2015,Anvil Energy,procurement@anvilenergy.com,Marco Reyes,deal_created,2025-07-02T09:00:00Z,
+DEAL-2015,Anvil Energy,procurement@anvilenergy.com,Marco Reyes,deal_won,2025-07-16T13:00:00Z,71000
+DEAL-2016,Driftwood Hospitality,finance@driftwoodhosp.com,Dana Liu,deal_created,2025-07-08T10:30:00Z,
+DEAL-2016,Driftwood Hospitality,finance@driftwoodhosp.com,Dana Liu,deal_won,2025-07-22T15:00:00Z,27000
+DEAL-2017,Granite Peak Consulting,ops@granitepeak.com,Priya Nair,deal_created,2025-07-15T11:00:00Z,
+DEAL-2017,Granite Peak Consulting,ops@granitepeak.com,Priya Nair,deal_won,2025-07-29T14:30:00Z,19000
+DEAL-2018,Solace Telehealth,it@solacetelehealth.com,Marco Reyes,deal_created,2025-08-04T09:30:00Z,
+DEAL-2018,Solace Telehealth,it@solacetelehealth.com,Marco Reyes,deal_won,2025-08-18T16:00:00Z,44000

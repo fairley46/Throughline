@@ -1,0 +1,19 @@
+invoice_id,deal_id,company,customer_email,event,timestamp,amount
+in_3001,,Northwind Logistics,ops@northwindlogistics.com,payment_received,2025-01-28T12:00:00Z,24000
+in_3002,,Northwind Logistics,ops@northwindlogistics.com,payment_received,2025-06-25T12:00:00Z,42000
+in_3003,DEAL-2003,Brightwave Media,finance@brightwavemedia.io,payment_received,2025-02-20T12:00:00Z,18000
+in_3004,DEAL-2004,Cobalt Health,it@cobalthealth.com,payment_received,2025-03-12T12:00:00Z,55000
+in_3005,DEAL-2005,Harbor Freight Co,admin@harborfreightco.com,payment_received,2025-03-18T12:00:00Z,12000
+in_3006,DEAL-2006,Quill & Quire SaaS,billing@quillquire.com,payment_received,2025-03-31T12:00:00Z,31000
+in_3007,DEAL-2007,Vertex Robotics,procurement@vertexrobotics.com,payment_received,2025-04-09T12:00:00Z,67000
+in_3008,DEAL-2008,Maple Grove Retail,ops@maplegroveretail.com,payment_received,2025-04-25T12:00:00Z,21000
+in_3009,DEAL-2009,Sentinel Security,accounts@sentinelsecurity.com,payment_received,2025-05-02T12:00:00Z,38000
+in_3010,DEAL-2010,Pelican Bay Foods,finance@pelicanbayfoods.com,payment_received,2025-05-23T12:00:00Z,29000
+in_3011,DEAL-2011,Ironclad Manufacturing,it@ironcladmfg.com,payment_received,2025-05-29T12:00:00Z,48000
+in_3012,DEAL-2012,Lumen Analytics,ops@lumenanalytics.com,payment_received,2025-06-11T12:00:00Z,33000
+in_3013,DEAL-2013,Cascade Outfitters,admin@cascadeoutfitters.com,payment_received,2025-06-22T12:00:00Z,16000
+in_3014,DEAL-2014,Trellis Software,billing@trellissoftware.com,payment_received,2025-07-01T12:00:00Z,52000
+in_3015,DEAL-2015,Anvil Energy,procurement@anvilenergy.com,payment_received,2025-07-23T12:00:00Z,71000
+in_3016,DEAL-2016,Driftwood Hospitality,finance@driftwoodhosp.com,payment_received,2025-07-29T12:00:00Z,27000
+in_3017,DEAL-2017,Granite Peak Consulting,ops@granitepeak.com,payment_received,2025-08-05T12:00:00Z,19000
+in_3018,DEAL-2018,Solace Telehealth,it@solacetelehealth.com,payment_received,2025-08-25T12:00:00Z,44000

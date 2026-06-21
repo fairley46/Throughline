@@ -1,0 +1,18 @@
+account_id,deal_id,company,account_domain,contact_email,owner,event,timestamp,amount
+ACC-NS-700,DEAL-NS-9001,Globex Corp,globex.com,procurement@globex.com,Dana Reyes,lead_created,2025-01-06T09:00:00Z,
+ACC-NS-700,DEAL-NS-9001,Globex Corp,globex.com,procurement@globex.com,Dana Reyes,deal_created,2025-01-20T09:00:00Z,180000
+ACC-NS-700,DEAL-NS-9001,Globex Corp,globex.com,procurement@globex.com,Dana Reyes,deal_won,2025-02-14T17:00:00Z,180000
+ACC-NS-700,DEAL-NS-9014,Globex Corp,globex.com,procurement@globex.com,Dana Reyes,deal_created,2025-03-03T09:00:00Z,95000
+ACC-NS-700,DEAL-NS-9014,Globex Corp,globex.com,procurement@globex.com,Dana Reyes,deal_won,2025-03-28T16:00:00Z,95000
+ACC-NS-700,DEAL-NS-9027,Globex Corp,globex.com,ops@globex.com,Priya Anand,deal_created,2025-05-12T09:00:00Z,240000
+ACC-NS-700,DEAL-NS-9027,Globex Corp,globex.com,ops@globex.com,Priya Anand,deal_won,2025-06-09T15:00:00Z,240000
+ACC-NS-701,DEAL-NS-9033,Initech LLC,initech.com,buyer@initech.com,Marcus Lee,lead_created,2025-02-02T09:00:00Z,
+ACC-NS-701,DEAL-NS-9033,Initech LLC,initech.com,buyer@initech.com,Marcus Lee,deal_created,2025-02-18T09:00:00Z,64000
+ACC-NS-701,DEAL-NS-9033,Initech LLC,initech.com,buyer@initech.com,Marcus Lee,deal_won,2025-03-15T14:00:00Z,64000
+ACC-NS-702,DEAL-NS-9041,Soylent Industries,soylent.io,it@soylent.io,Dana Reyes,deal_created,2025-04-01T09:00:00Z,128000
+ACC-NS-702,DEAL-NS-9041,Soylent Industries,soylent.io,it@soylent.io,Dana Reyes,deal_won,2025-04-26T13:00:00Z,128000
+ACC-NS-703,DEAL-NS-9052,Hooli Inc,hooli.com,vendors@hooli.com,Priya Anand,lead_created,2025-05-04T09:00:00Z,
+ACC-NS-703,DEAL-NS-9052,Hooli Inc,hooli.com,vendors@hooli.com,Priya Anand,deal_created,2025-05-19T09:00:00Z,310000
+ACC-NS-703,DEAL-NS-9052,Hooli Inc,hooli.com,vendors@hooli.com,Priya Anand,deal_won,2025-06-20T16:00:00Z,310000
+ACC-NS-704,DEAL-NS-9060,Stark Manufacturing,starkmfg.com,supply@starkmfg.com,Marcus Lee,deal_created,2025-06-02T09:00:00Z,52000
+ACC-NS-704,DEAL-NS-9060,Stark Manufacturing,starkmfg.com,supply@starkmfg.com,Marcus Lee,deal_won,2025-06-30T11:00:00Z,52000

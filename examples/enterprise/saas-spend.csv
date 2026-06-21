@@ -1,0 +1,89 @@
+service_id,name,category,vendor,cost_model,monthly_cost,seats,utilized_seats,stages_served,fte_roles
+SVC-001,Salesforce Sales Cloud,crm,Salesforce,subscription_per_seat,4200,120,88,lead|opportunity,AE|SDR|Sales ops
+SVC-002,HubSpot Sales Hub,crm,HubSpot,subscription_per_seat,2600,80,31,lead|opportunity,AE|SDR
+SVC-003,Pipedrive,crm,Pipedrive,subscription_per_seat,540,30,4,opportunity,AE
+SVC-004,NetSuite ERP,erp,Oracle,subscription_flat,9800,60,55,order|billing,Finance|Order mgmt
+SVC-005,SAP Concur,expense,SAP,subscription_per_seat,1800,200,140,billing,Finance|Employees
+SVC-006,Stripe Billing,payments,Stripe,transaction_fee,2200,,,billing,Finance
+SVC-007,Bill.com,payments,Bill.com,subscription_flat,420,12,5,billing,AP clerk
+SVC-008,ServiceNow ITSM,itsm,ServiceNow,subscription_per_seat,6400,150,96,support,Support|SRE
+SVC-009,Zendesk,itsm,Zendesk,subscription_per_seat,1900,60,18,support,Support
+SVC-010,Jira Service Management,itsm,Atlassian,subscription_per_seat,1500,90,40,support,Support|Eng
+SVC-011,Snowflake,data_warehouse,Snowflake,usage,14500,,,provisioning|distribution,Data eng|Analytics
+SVC-012,Databricks,data_warehouse,Databricks,usage,8800,,,,Data science
+SVC-013,Looker,bi,Google,subscription_per_seat,3100,75,49,,Analysts
+SVC-014,Tableau,bi,Salesforce,subscription_per_seat,2700,60,22,,Analysts
+SVC-015,Power BI,bi,Microsoft,subscription_per_seat,900,120,30,,Analysts
+SVC-016,Gong,sales_intel,Gong,subscription_per_seat,3300,60,44,opportunity,AE|Sales ops
+SVC-017,Chorus,sales_intel,ZoomInfo,subscription_per_seat,1400,40,6,opportunity,AE
+SVC-018,Outreach,sales_engagement,Outreach,subscription_per_seat,2400,70,52,lead|opportunity,SDR
+SVC-019,Salesloft,sales_engagement,Salesloft,subscription_per_seat,1600,45,9,lead|opportunity,SDR
+SVC-020,ZoomInfo,data_enrichment,ZoomInfo,subscription_per_seat,2900,50,38,lead,SDR|Marketing
+SVC-021,Clearbit,data_enrichment,HubSpot,subscription_flat,800,,,lead,Marketing
+SVC-022,Marketo,marketing_automation,Adobe,subscription_flat,3600,,,lead,Marketing
+SVC-023,HubSpot Marketing Hub,marketing_automation,HubSpot,subscription_flat,2100,,,lead,Marketing
+SVC-024,Pardot,marketing_automation,Salesforce,subscription_flat,1500,,,,Marketing
+SVC-025,Mailchimp,email_marketing,Intuit,subscription_flat,350,,,lead,Marketing
+SVC-026,DocuSign,e_signature,DocuSign,subscription_per_seat,1200,80,61,order,Sales|Legal
+SVC-027,PandaDoc,e_signature,PandaDoc,subscription_per_seat,640,40,7,order,Sales
+SVC-028,Ironclad,contract_mgmt,Ironclad,subscription_flat,2800,,,order,Legal
+SVC-029,Coupa,procurement,Coupa,subscription_flat,4100,90,58,billing,Procurement
+SVC-030,SAP Ariba,procurement,SAP,subscription_flat,3900,70,12,billing,Procurement
+SVC-031,Workday HCM,hr,Workday,subscription_per_seat,7200,400,360,,HR|Employees
+SVC-032,BambooHR,hr,BambooHR,subscription_per_seat,900,120,18,,HR
+SVC-033,Greenhouse,recruiting,Greenhouse,subscription_flat,1600,,,,Recruiting
+SVC-034,Lever,recruiting,Employ,subscription_flat,1100,,,,Recruiting
+SVC-035,Slack,collaboration,Salesforce,subscription_per_seat,3800,500,470,,All staff
+SVC-036,Microsoft Teams,collaboration,Microsoft,subscription_per_seat,0,500,210,,All staff
+SVC-037,Zoom,video,Zoom,subscription_per_seat,2200,300,260,,All staff
+SVC-038,Google Workspace,productivity,Google,subscription_per_seat,6000,500,480,,All staff
+SVC-039,Microsoft 365,productivity,Microsoft,subscription_per_seat,5400,450,430,,All staff
+SVC-040,Notion,knowledge,Notion,subscription_per_seat,1400,200,110,,All staff
+SVC-041,Confluence,knowledge,Atlassian,subscription_per_seat,1300,180,64,,Eng|PM
+SVC-042,Asana,project_mgmt,Asana,subscription_per_seat,1200,150,42,provisioning,PM|Ops
+SVC-043,Monday.com,project_mgmt,Monday,subscription_per_seat,980,120,29,provisioning,PM|Ops
+SVC-044,Smartsheet,project_mgmt,Smartsheet,subscription_per_seat,760,80,11,provisioning,Ops
+SVC-045,Jira Software,dev_tools,Atlassian,subscription_per_seat,2300,200,170,,Eng
+SVC-046,GitHub Enterprise,dev_tools,Microsoft,subscription_per_seat,3100,180,162,,Eng
+SVC-047,GitLab,dev_tools,GitLab,subscription_per_seat,1100,60,14,,Eng
+SVC-048,CircleCI,ci_cd,CircleCI,usage,1800,,,,Eng
+SVC-049,Datadog,observability,Datadog,usage,9200,,,support,SRE
+SVC-050,New Relic,observability,New Relic,usage,4100,,,support,SRE
+SVC-051,Splunk,observability,Cisco,usage,7600,,,,Security
+SVC-052,PagerDuty,incident,PagerDuty,subscription_per_seat,1300,80,58,support,SRE
+SVC-053,Opsgenie,incident,Atlassian,subscription_per_seat,520,40,6,support,SRE
+SVC-054,AWS,cloud_infra,Amazon,usage,68000,,,provisioning|distribution,SRE|Data eng
+SVC-055,Microsoft Azure,cloud_infra,Microsoft,usage,31000,,,provisioning,SRE
+SVC-056,Google Cloud,cloud_infra,Google,usage,12500,,,distribution,Data eng
+SVC-057,Cloudflare,cdn,Cloudflare,subscription_flat,2400,,,distribution,SRE
+SVC-058,Fastly,cdn,Fastly,usage,1900,,,distribution,SRE
+SVC-059,Okta,identity,Okta,subscription_per_seat,4400,500,460,,Security|IT
+SVC-060,OneLogin,identity,One Identity,subscription_per_seat,1200,150,12,,IT
+SVC-061,1Password,security,AgileBits,subscription_per_seat,1500,500,330,,All staff
+SVC-062,CrowdStrike,security,CrowdStrike,subscription_per_seat,5200,500,490,,Security
+SVC-063,Zscaler,security,Zscaler,subscription_per_seat,3300,400,180,,Security
+SVC-064,Adobe Creative Cloud,design,Adobe,subscription_per_seat,2100,40,9,,Design|Marketing
+SVC-065,Figma,design,Figma,subscription_per_seat,1400,80,52,,Design|PM
+SVC-066,Sketch,design,Sketch,subscription_per_seat,180,20,2,,Design
+SVC-067,Calendly,scheduling,Calendly,subscription_per_seat,480,120,44,lead,SDR|AE
+SVC-068,Chili Piper,scheduling,Chili Piper,subscription_per_seat,900,60,8,lead,SDR
+SVC-069,Intercom,customer_msg,Intercom,subscription_per_seat,2600,50,33,support,Support
+SVC-070,Drift,customer_msg,Salesloft,subscription_flat,1200,,,lead,Marketing
+SVC-071,Segment,cdp,Twilio,usage,3400,,,,Data eng
+SVC-072,Amplitude,product_analytics,Amplitude,subscription_flat,2800,,,,Product
+SVC-073,Mixpanel,product_analytics,Mixpanel,subscription_flat,1600,,,,Product
+SVC-074,Pendo,product_analytics,Pendo,subscription_flat,1900,,,,Product
+SVC-075,Gainsight,customer_success,Gainsight,subscription_per_seat,3700,40,27,renewal,CSM
+SVC-076,ChurnZero,customer_success,ChurnZero,subscription_per_seat,1100,25,4,renewal,CSM
+SVC-077,Totango,customer_success,Totango,subscription_flat,1400,,,renewal,CSM
+SVC-078,Salesforce CPQ,cpq,Salesforce,subscription_per_seat,2900,60,41,opportunity|order,Sales ops
+SVC-079,Apttus CPQ,cpq,Conga,subscription_per_seat,1700,30,3,opportunity|order,Sales ops
+SVC-080,Avalara,tax,Avalara,subscription_flat,1300,,,billing,Finance
+SVC-081,Vertex Tax,tax,Vertex,subscription_flat,1100,,,billing,Finance
+SVC-082,Expensify,expense,Expensify,subscription_per_seat,600,150,22,,Employees
+SVC-083,Lucidchart,diagramming,Lucid,subscription_per_seat,420,100,18,,Eng|PM
+SVC-084,Miro,whiteboard,Miro,subscription_per_seat,1100,200,75,,All staff
+SVC-085,Loom,video,Atlassian,subscription_per_seat,380,120,16,,All staff
+SVC-086,Airtable,database,Airtable,subscription_per_seat,950,80,21,provisioning,Ops
+SVC-087,Retool,internal_tools,Retool,subscription_per_seat,1300,40,28,provisioning,Eng
+SVC-088,Twilio,comms_api,Twilio,usage,2700,,,distribution,Eng

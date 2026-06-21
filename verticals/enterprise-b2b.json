@@ -1,0 +1,32 @@
+{
+  "id": "enterprise-b2b",
+  "label": "Enterprise B2B (multi-BU, channel)",
+  "defaultUnit": "order",
+  "stages": [
+    { "id": "lead", "label": "Lead / MQL", "color": "#2563eb", "order": 0, "events": ["lead_created", "mql_created"] },
+    { "id": "opportunity", "label": "Opportunity / Deal", "color": "#3b82f6", "order": 1, "events": ["deal_created", "opportunity_created", "deal_won"] },
+    { "id": "order", "label": "Order / Contract", "color": "#0891b2", "order": 2, "events": ["order_placed", "contract_signed"] },
+    { "id": "billing", "label": "Billing / ERP", "color": "#0ea5e9", "order": 3, "events": ["invoice_issued", "payment_received"] },
+    { "id": "provisioning", "label": "Provisioning / Onboarding", "color": "#7c3aed", "order": 4, "events": ["provisioned", "kickoff_scheduled", "go_live"] },
+    { "id": "distribution", "label": "Distribution / Channel", "color": "#a855f7", "order": 5, "events": ["channel_shipped", "partner_fulfilled", "reseller_delivered"] },
+    { "id": "support", "label": "Support / ITSM", "color": "#dc2626", "order": 6, "events": ["incident_opened", "ticket_opened", "incident_resolved"] },
+    { "id": "renewal", "label": "Renewal / Expansion", "color": "#d97706", "order": 7, "events": ["renewal_offered", "renewed", "expansion_booked", "churned"] }
+  ],
+  "cardinality": [
+    { "from": "lead", "to": "opportunity", "max": "many", "expected": false },
+    { "from": "opportunity", "to": "order", "max": 1, "expected": true },
+    { "from": "order", "to": "billing", "max": 1, "expected": true },
+    { "from": "order", "to": "provisioning", "max": 1, "expected": true },
+    { "from": "order", "to": "distribution", "max": "many", "expected": false },
+    { "from": "order", "to": "support", "max": "many", "expected": false },
+    { "from": "order", "to": "renewal", "max": 1, "expected": false }
+  ],
+  "joinKeys": [
+    { "key": "order_id", "aliases": ["order_id", "deal_id", "deal", "opportunity_id", "opp_id", "contract_id"] },
+    { "key": "invoice_id", "aliases": ["invoice_id", "invoice", "invoice_no", "erp_doc"] },
+    { "key": "account_id", "aliases": ["account_id", "crm_account_id"] },
+    { "key": "account_email", "aliases": ["email", "contact_email", "customer_email"] },
+    { "key": "account_domain", "aliases": ["domain", "account_domain", "company_domain"] },
+    { "key": "company", "aliases": ["company", "account", "customer", "customer_name", "account_name"] }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": "dental-practice",
+  "label": "Dental Practice Flow",
+  "defaultUnit": "treatment_plan",
+  "stages": [
+    { "id": "booking", "label": "Booking / Schedule", "color": "#2563eb", "order": 0, "events": ["appointment_booked", "appointment_scheduled"] },
+    { "id": "insurance_verify", "label": "Insurance Verification", "color": "#7c3aed", "order": 1, "events": ["insurance_verified", "eligibility_checked"] },
+    { "id": "visit", "label": "Visit / Exam", "color": "#0891b2", "order": 2, "events": ["patient_arrived", "exam_completed"] },
+    { "id": "treatment", "label": "Treatment", "color": "#16a34a", "order": 3, "events": ["treatment_performed", "procedure_completed"] },
+    { "id": "billing", "label": "Billing", "color": "#0ea5e9", "order": 4, "events": ["invoice_issued", "statement_sent"] },
+    { "id": "claim", "label": "Insurance Claim", "color": "#d97706", "order": 5, "events": ["claim_submitted", "claim_paid"] },
+    { "id": "payment", "label": "Patient Payment", "color": "#22c55e", "order": 6, "events": ["payment_received"] },
+    { "id": "recall", "label": "Recall / Recurring", "color": "#a855f7", "order": 7, "events": ["recall_scheduled", "recall_reminder_sent"] }
+  ],
+  "cardinality": [
+    { "from": "booking", "to": "insurance_verify", "max": 1, "expected": true },
+    { "from": "booking", "to": "visit", "max": 1, "expected": true },
+    { "from": "visit", "to": "treatment", "max": "many", "expected": false },
+    { "from": "treatment", "to": "billing", "max": 1, "expected": true },
+    { "from": "billing", "to": "claim", "max": 1, "expected": true },
+    { "from": "billing", "to": "payment", "max": 1, "expected": true },
+    { "from": "treatment", "to": "recall", "max": 1, "expected": false }
+  ],
+  "joinKeys": [
+    { "key": "treatment_plan_id", "aliases": ["treatment_plan_id", "plan_id", "case_id", "appointment_id", "appt_id", "visit_id"] },
+    { "key": "claim_id", "aliases": ["claim_id", "claim_no", "claim_number"] },
+    { "key": "invoice_id", "aliases": ["invoice_id", "invoice", "invoice_no", "statement_id"] },
+    { "key": "patient_email", "aliases": ["email", "patient_email", "contact_email"] },
+    { "key": "patient_phone", "aliases": ["phone", "patient_phone", "mobile"] },
+    { "key": "patient_name", "aliases": ["patient", "patient_name", "name"] }
+  ]
+}

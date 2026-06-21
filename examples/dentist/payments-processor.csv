@@ -1,0 +1,5 @@
+charge_id,patient_email,patient_name,event,timestamp,amount
+ch_9f21,maria.g@gmail.com,Maria Gonzalez,payment_received,2025-03-15T16:00:00Z,300
+ch_9f88,maria.g@gmail.com,Maria Gonzalez,payment_received,2025-09-18T16:00:00Z,400
+ch_9f30,jwhit@outlook.com,James Whitfield,payment_received,2025-03-12T15:00:00Z,140
+ch_9f44,aisha.r@gmail.com,Aisha Rahman,payment_received,2025-04-12T15:00:00Z,52

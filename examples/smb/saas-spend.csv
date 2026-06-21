@@ -1,0 +1,37 @@
+service_id,name,category,vendor,cost_model,monthly_cost,seats,utilized_seats,stages_served,fte_roles
+SVC-01,HubSpot CRM,crm,HubSpot,subscription_per_seat,1600,40,34,purchase|renewal,AE|SDR|CS
+SVC-02,Salesforce,crm,Salesforce,subscription_per_seat,2400,30,11,purchase,AE|RevOps
+SVC-03,Stripe Billing,billing,Stripe,transaction_fee,900,,,billing,Finance
+SVC-04,Chargebee,billing,Chargebee,subscription_flat,599,5,4,billing,Finance
+SVC-05,Zendesk,support,Zendesk,subscription_per_seat,1150,25,23,support,Support|CS
+SVC-06,Intercom,support,Intercom,subscription_per_seat,840,20,7,support,Support
+SVC-07,Asana,project_mgmt,Asana,subscription_per_seat,750,50,38,onboarding|implementation,CS|Implementation
+SVC-08,Jira,project_mgmt,Atlassian,subscription_per_seat,700,45,40,implementation,Engineering|Implementation
+SVC-09,Gainsight,customer_success,Gainsight,subscription_per_seat,1900,15,12,renewal,CS|CSM
+SVC-10,Slack,comms,Salesforce,subscription_per_seat,1200,110,104,,All staff
+SVC-11,Zoom,comms,Zoom,subscription_per_seat,650,90,72,onboarding,All staff
+SVC-12,Google Workspace,comms,Google,subscription_per_seat,1980,110,108,,All staff
+SVC-13,Marketo,marketing,Adobe,subscription_flat,2100,8,6,purchase,Marketing
+SVC-14,Mailchimp,marketing,Intuit,subscription_flat,350,6,2,purchase,Marketing
+SVC-15,Webflow,marketing,Webflow,subscription_flat,120,4,3,,Marketing
+SVC-16,AWS,cloud,Amazon,usage,8500,,,implementation,Engineering|DevOps
+SVC-17,Datadog,cloud,Datadog,usage,1400,,,implementation,Engineering|DevOps
+SVC-18,Vercel,cloud,Vercel,usage,420,12,9,implementation,Engineering
+SVC-19,GitHub,engineering,GitHub,subscription_per_seat,890,50,46,implementation,Engineering
+SVC-20,Linear,engineering,Linear,subscription_per_seat,320,40,31,implementation,Engineering
+SVC-21,QuickBooks Online,accounting,Intuit,subscription_flat,180,5,4,billing,Finance|Accounting
+SVC-22,Bill.com,accounting,BILL,subscription_per_seat,240,4,3,billing,Accounting
+SVC-23,Gusto,hr,Gusto,subscription_per_seat,990,110,110,,People Ops
+SVC-24,Lattice,hr,Lattice,subscription_per_seat,880,110,61,,People Ops|Managers
+SVC-25,Greenhouse,hr,Greenhouse,subscription_flat,650,8,5,,Recruiting
+SVC-26,Looker,bi,Google,subscription_per_seat,1500,18,14,,RevOps|Data
+SVC-27,Tableau,bi,Salesforce,subscription_per_seat,1100,15,4,,Data|Finance
+SVC-28,Notion,knowledge,Notion,subscription_per_seat,640,110,88,onboarding,All staff
+SVC-29,Confluence,knowledge,Atlassian,subscription_per_seat,550,45,19,onboarding,Engineering|CS
+SVC-30,DocuSign,legal,Docusign,subscription_per_seat,290,12,9,purchase,Sales|Legal
+SVC-31,Ironclad CLM,legal,Ironclad,subscription_flat,1200,6,5,purchase,Legal
+SVC-32,Calendly,sales_tools,Calendly,subscription_per_seat,240,40,33,onboarding,Sales|CS
+SVC-33,Gong,sales_tools,Gong,subscription_per_seat,2200,25,21,purchase,Sales|RevOps
+SVC-34,Loom Enterprise,productivity,Atlassian,subscription_flat,210,30,2,,Marketing
+SVC-35,Miro,productivity,Miro,subscription_per_seat,380,40,12,onboarding,Product|Design
+SVC-36,Productboard,product,Productboard,subscription_flat,540,10,8,,Product

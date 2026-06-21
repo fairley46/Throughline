@@ -1,0 +1,5 @@
+claim_id,patient_name,patient_email,subscriber_id,event,timestamp,billed_amount
+CLM-88201,Maria Gonzalez,maria.g@gmail.com,DELTA-4471,claim_submitted,2025-02-26T12:00:00Z,1200
+CLM-88440,Maria Gonzalez,maria.g@gmail.com,DELTA-4471,claim_submitted,2025-08-28T12:00:00Z,1450
+CLM-88210,James Whitfield,jwhit@outlook.com,CIGNA-9982,claim_submitted,2025-03-13T12:00:00Z,140
+CLM-88225,Aisha Rahman,aisha.r@gmail.com,AETNA-1120,claim_submitted,2025-04-11T12:00:00Z,260

@@ -1,0 +1,7 @@
+order_id,company,account_domain,csm,event,timestamp,amount
+DEAL-NS-9001,Globex Corp,globex.com,Nina Cole,renewal_offered,2025-12-01T09:00:00Z,
+DEAL-NS-9001,Globex Corp,globex.com,Nina Cole,renewed,2026-01-15T09:00:00Z,198000
+DEAL-NS-9033,Initech LLC,initech.com,Owen Pratt,renewal_offered,2026-01-10T09:00:00Z,
+DEAL-NS-9033,Initech LLC,initech.com,Owen Pratt,churned,2026-02-01T09:00:00Z,
+DEAL-NS-9041,Soylent Industries,soylent.io,Nina Cole,expansion_booked,2025-10-05T09:00:00Z,45000
+OPP-HS-3168,Umbrella Health,umbrellahealth.org,Owen Pratt,renewed,2026-01-20T09:00:00Z,140000
