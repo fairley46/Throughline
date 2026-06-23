@@ -8,7 +8,11 @@
 <p align="center">
   <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT">
   <img src="https://img.shields.io/badge/node-%3E%3D20-brightgreen" alt="Node >=20">
-  <img src="https://img.shields.io/badge/status-v1.1.0-blueviolet" alt="v1.1.0">
+  <img src="https://img.shields.io/badge/status-v1.2.0-blueviolet" alt="v1.2.0">
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/explorer-v1.png" alt="Throughline explorer — the value stream as an interactive graph" width="920">
 </p>
 
 ---
@@ -122,10 +126,19 @@ node skills/reconstruct-value-stream/run-pipeline.mjs \
 ## The dashboard
 
 `npm run dashboard` serves the model on `127.0.0.1` behind a token gate — the URL it prints
-carries a `?token=` you need to get past the gate, and it never binds a public interface. Inside
-you get the value-stream STAGE view, the raw EVENT view, and the service-architecture view, with
-click-through from any stage down to its metrics, its drill-down records, and the underlying
-source events — and the confidence/gap layer surfaced, not hidden.
+carries a `?token=` you need to get past the gate, and it never binds a public interface.
+
+Inside is an **interactive graph explorer** — the value stream as a pannable, zoomable map:
+
+- **Map** — stages as connected node cards inside cluster frames, flow edges weighted by journey
+  volume, and the bottleneck seams nobody owns glowing between stages. Click a node for its true
+  cost, the records that landed there, and the apps powering it — or take the guided tour.
+- **Flow · Connections · Stages · Services · Gaps** — the supporting views: the reconciliation
+  made visible (Tier-1 vs Tier-2 links by source), true cost per stage (labor + tooling via the
+  service bridge), the service-architecture breakdown (zombie apps, sprawl, vendor lock-in), and
+  every gap named with *what it is* plus its dollar/time impact.
+- Fuzzy search, source/status filters, a minimap, and an INFO / TOUR side panel — with the
+  confidence/gap layer surfaced, not hidden.
 
 ## Vertical-agnostic by design
 
@@ -151,12 +164,11 @@ docs/specs/                    the locked design documents
 
 ## Status
 
-**v1.1.0.** Both model axes, the reconciliation engine with its over-merge guard, the agent
-pipeline, the model-first render, and the token-gated localhost dashboard are in place. Build,
-tests, and the demo run clean.
-
-**Next:** a three-scale pressure test (small practice → mid-size SMB → enterprise) exercising the
-reconciler and the service-architecture view under increasing data volume and messiness.
+**v1.2.0.** Both model axes, the reconciliation engine with its over-merge guard, the agent
+pipeline, and the interactive graph-explorer dashboard are in place. A three-scale pressure test
+(small practice → mid-size SMB → enterprise) passes — the reconciler and the service-architecture
+view hold across increasing volume and messiness (see [`docs/PRESSURE-TEST.md`](docs/PRESSURE-TEST.md)).
+Build, tests, and the demo run clean.
 
 ## License
 

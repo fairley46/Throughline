@@ -248,8 +248,8 @@ export const MODEL_VERSION = '1.0.0';
 
 /**
  * Deterministic referential-integrity validation of a model — the mechanical
- * half of what the `model-reviewer` agent does (mirror of UA's inline
- * validate). Returns a list of issues (empty = clean).
+ * half of what the `model-reviewer` agent does. Returns a list of issues
+ * (empty = clean).
  */
 export function validateModel(model: ValueStreamModel): string[] {
   const issues: string[] = [];

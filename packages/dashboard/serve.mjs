@@ -130,7 +130,7 @@ const server = createServer((req, res) => {
   const url = new URL(req.url ?? '/', `http://${HOST}`);
   const pathname = url.pathname;
 
-  // The single protected data endpoint — the token gate, mirrored from UA.
+  // The single protected data endpoint — the token gate.
   if (pathname === '/model.json') {
     if (url.searchParams.get('token') !== ACCESS_TOKEN) {
       send(res, 403, 'application/json', JSON.stringify({ error: 'Forbidden: missing or invalid token' }));
