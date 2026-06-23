@@ -14,7 +14,7 @@ downstream number, and it is the other half of the over-merge fix — the unit d
 grain, and the vertical's cardinality config defines the legal shape that keeps two separate
 units of the same customer from collapsing into one blob.
 
-There is no analogue for this in UA (code's unit is the file, given for free). It is net-new and
+Choosing the unit of analysis is net-new and
 **co-designed with the `reconciler`**: pick the wrong unit and the cardinality guard can't protect
 you.
 

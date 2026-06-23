@@ -70,7 +70,7 @@ the schema.
 
 ## Two execution paths
 
-UA's `SKILL.md` is driven by a live agent runtime dispatching subagents per phase. This skill
+A live agent runtime can drive this `SKILL.md` by dispatching subagents per phase. This skill
 supports both that and a self-contained deterministic harness, because the deliverable must be
 runnable and CI-testable without a live agent loop (see `docs/STRUCTURE.md`, decision #2).
 
@@ -125,7 +125,7 @@ the phases marked **(LLM)**.
 ### Phase 0 — Profile sources *(deterministic — `profile-sources.mjs`)*
 
 For each source file, profile its columns and flag which look like timestamps, money,
-person/FTE, or identifiers (candidate join keys). This is the analogue of UA's `scan-project.mjs`:
+person/FTE, or identifiers (candidate join keys). The deterministic source profiler:
 cheap structure, no LLM. The harness reuses `parseFile()` + `profile()` directly; the live path
 runs `profile-sources.mjs <sourcesDir> <out>` and hands the profiles to the `source-profiler`
 agent.
