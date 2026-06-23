@@ -9,20 +9,20 @@
  * fetches the model from a token-gated endpoint instead of inlining it.
  */
 
-import { STYLE, CLIENT_SCRIPT, esc } from './views.mjs';
+import { STYLE, CLIENT_SCRIPT, esc, buildToolbar, buildSearchBar } from './views.mjs';
 
 // Re-export formatting helpers for any legacy callers.
 export { esc, money, days } from './views.mjs';
 export { STYLE } from './views.mjs';
 
-export function page({ title, subtitle, tabs, views, model, viewsModule }) {
+export function page({ title, views, model, viewsModule }) {
   return `<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(title)}</title><style>${STYLE}</style></head>
 <body>
-<header><h1>${esc(title)}</h1><div class="sub">${subtitle}</div></header>
-<div class="tabs">${tabs}</div>
-${views}
+<div class="toolbar" id="toolbar">${buildToolbar(model)}</div>
+${buildSearchBar()}
+<div id="views">${views}</div>
 <div class="drill-overlay" id="drill-overlay"><div class="drill-panel" id="drill-body"></div></div>
 <script>window.__MODEL__ = ${JSON.stringify(model)};</script>
 <script>${viewsModule}</script>

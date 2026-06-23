@@ -28,7 +28,7 @@ import { randomBytes } from 'node:crypto';
 import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve, isAbsolute } from 'node:path';
-import { STYLE, CLIENT_SCRIPT } from './views.mjs';
+import { STYLE, CLIENT_SCRIPT, buildToolbar, buildSearchBar } from './views.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '..', '..');
@@ -60,7 +60,9 @@ function browserViewsModule() {
   return `${stripped}
 window.__VIEWS__ = {
   stageDrill: stageDrill, journeyDrill: journeyDrill,
-  buildTabs: buildTabs, buildViews: buildViews, subtitleFor: subtitleFor
+  stageInfo: stageInfo, mapInfoDefault: mapInfoDefault, buildTour: buildTour,
+  buildTabs: buildTabs, buildViews: buildViews, subtitleFor: subtitleFor,
+  buildToolbar: buildToolbar, buildSearchBar: buildSearchBar
 };`;
 }
 
@@ -72,9 +74,9 @@ function shellHtml() {
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>throughline — value-stream + service-architecture</title><style>${STYLE}</style></head>
 <body>
-<header><h1>throughline — value-stream + service-architecture</h1><div class="sub" id="sub">loading model…</div></header>
-<div class="tabs" id="tabs"></div>
-<div id="views"><div class="view active" style="padding:24px 28px"><div class="note" id="status">Loading model from the token-gated endpoint…</div></div></div>
+<div class="toolbar" id="toolbar"><div class="brand"><span class="brand-name">Throughline</span></div></div>
+<div id="searchbar-slot"></div>
+<div id="views"><div class="view active" style="padding:48px 28px"><div class="note" id="status">Loading model from the token-gated endpoint…</div></div></div>
 <div class="drill-overlay" id="drill-overlay"><div class="drill-panel" id="drill-body"></div></div>
 <script>${viewsModule}</script>
 <script>
@@ -88,11 +90,12 @@ function shellHtml() {
   }).then(function(model){
     if(!model) return;
     window.__MODEL__ = model;
-    document.getElementById('sub').innerHTML = window.subtitleFor(model);
-    document.getElementById('tabs').innerHTML = window.buildTabs();
-    document.getElementById('views').innerHTML = window.buildViews(model);
+    document.getElementById('toolbar').innerHTML = window.__VIEWS__.buildToolbar(model);
+    document.getElementById('searchbar-slot').innerHTML = window.__VIEWS__.buildSearchBar();
+    document.getElementById('views').innerHTML = window.__VIEWS__.buildViews(model);
+    if(window.__BOOT__) window.__BOOT__();
   }).catch(function(e){
-    document.getElementById('status').textContent = 'Failed to load model: ' + e.message;
+    var s = document.getElementById('status'); if(s) s.textContent = 'Failed to load model: ' + e.message;
   });
   function gate(title, msg){
     document.getElementById('views').innerHTML =
@@ -108,6 +111,9 @@ function shellHtml() {
 function send(res, status, type, body) {
   res.statusCode = status;
   res.setHeader('Content-Type', type);
+  // never let the browser serve a stale build — the shell embeds the view code,
+  // so a cached HTML response would pin an old UI across server restarts.
+  res.setHeader('Cache-Control', 'no-store, must-revalidate');
   res.end(body);
 }
 

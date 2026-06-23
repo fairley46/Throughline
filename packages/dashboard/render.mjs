@@ -17,7 +17,7 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { page } from './template.mjs';
-import { buildTabs, buildViews, subtitleFor } from './views.mjs';
+import { buildViews } from './views.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -30,18 +30,18 @@ function browserViewsModule() {
   // builders we need at runtime off window.
   const stripped = src.replace(/^export\s+/gm, '');
   return `${stripped}
-window.__VIEWS__ = { stageDrill: stageDrill, journeyDrill: journeyDrill };
-window.__CLIENT_SCRIPT__ = CLIENT_SCRIPT;`;
+window.__VIEWS__ = {
+  stageDrill: stageDrill, journeyDrill: journeyDrill,
+  stageInfo: stageInfo, mapInfoDefault: mapInfoDefault, buildTour: buildTour,
+  buildTabs: buildTabs, buildViews: buildViews, subtitleFor: subtitleFor,
+  buildToolbar: buildToolbar, buildSearchBar: buildSearchBar
+};`;
 }
 
 export function renderModel(model) {
-  const subtitle = subtitleFor(model);
-  const tabs = buildTabs();
   const views = buildViews(model);
   return page({
     title: 'throughline — value-stream + service-architecture',
-    subtitle,
-    tabs,
     views,
     model,
     viewsModule: browserViewsModule(),
