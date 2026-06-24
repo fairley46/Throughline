@@ -17,6 +17,10 @@
 
 ---
 
+**Throughline reconstructs how a business actually operates — from the data it already produces — and renders it as a map you can walk.** Hand it a folder of an organization's mixed exports (CRM, billing, support, scheduling, accounting, SaaS-spend, even loose notes) and it stitches them into one model: the end-to-end value stream, every journey from first touch to renewal, the bottlenecks where work stalls, the apps and spend behind each stage, and the gaps no single system shows. You get an interactive graph explorer and an executive-ready breakdown — honest about what's known versus inferred.
+
+It's an open-source, local-first tool — a typed reconciliation engine, an LLM-agent pipeline, and a token-gated dashboard. It runs on your machine; your data never leaves it.
+
 ## The problem
 
 Every business is entities moving through states — a patient through a treatment plan, a deal
