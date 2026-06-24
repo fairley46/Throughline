@@ -62,9 +62,9 @@ deduplication**: it walks each chain in stage-and-time order and uses the expect
 journey (one deal has one invoice; one patient has many treatment plans) to know when it has
 crossed from one journey into the next. The over-merge guard is a tested invariant, not a hope.
 
-## Two axes of the operating floor
+## Two dimensions of the operating floor
 
-| Axis | What it captures | What it surfaces |
+| Dimension | What it captures | What it surfaces |
 | --- | --- | --- |
 | **Value stream** | Journeys of entities through stages, with time / cost / labor per transition | Cycle time, bottlenecks (interval seams nobody owns), handoff gaps |
 | **Service architecture** | The apps, services, vendors, and infrastructure the business runs on, and their costs | True cost per stage (labor + tooling + direct), app sprawl, zombie subscriptions, vendor concentration |
@@ -72,7 +72,7 @@ crossed from one journey into the next. The over-merge guard is a tested invaria
 The two are bridged: each service declares the stages it powers, so tooling cost flows onto the
 stages it actually supports. An app paid for but powering nothing becomes an **orphan-service
 gap** — the service-architecture twin of an interval seam nobody owns. Same honesty principle,
-different axis.
+different dimension.
 
 ## How it works
 
@@ -164,7 +164,7 @@ docs/specs/                    the locked design documents
 
 ## Status
 
-**v1.2.0.** Both model axes, the reconciliation engine with its over-merge guard, the agent
+**v1.2.0.** Both model dimensions, the reconciliation engine with its over-merge guard, the agent
 pipeline, and the interactive graph-explorer dashboard are in place. A three-scale pressure test
 (small practice → mid-size SMB → enterprise) passes — the reconciler and the service-architecture
 view hold across increasing volume and messiness (see [`docs/PRESSURE-TEST.md`](docs/PRESSURE-TEST.md)).
