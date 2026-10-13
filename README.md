@@ -6,6 +6,7 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/fairley46/Throughline/actions/workflows/ci.yml"><img src="https://github.com/fairley46/Throughline/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT">
   <img src="https://img.shields.io/badge/node-%3E%3D20-brightgreen" alt="Node >=20">
   <img src="https://img.shields.io/badge/status-v1.2.0-blueviolet" alt="v1.2.0">
@@ -102,18 +103,22 @@ sources ─▶ profile ─▶ normalize ─▶ detect unit ─▶ join candidate
 
 ## Quick start
 
+Requires **Node.js 20+** and **pnpm** (this is a pnpm workspace; `npm install` cannot resolve `workspace:` deps).
+
 ```bash
-npm install
-npm run build
+corepack enable
+pnpm install
+pnpm run build
+pnpm test
 
-# Run the pipeline on the bundled example data → writes out/model.json + out/index.html
-npm run demo
+# Pipeline on the bundled example → out/model.json + out/index.html
+pnpm run demo
 
-# Open the static interactive view
+# Static interactive view
 open out/index.html
 
-# Or launch the token-gated local dashboard (click-through, model-first)
-npm run dashboard
+# Token-gated local dashboard (model-first, click-through)
+pnpm run dashboard
 #   📊  serving model: out/model.json
 #   🔑  Dashboard URL: http://127.0.0.1:4317/?token=<token>
 ```
@@ -121,15 +126,28 @@ npm run dashboard
 Run the pipeline on your own data:
 
 ```bash
-node skills/reconstruct-value-stream/run-pipeline.mjs \
+pnpm run pipeline -- \
   --vertical saas-implementation \
   --sources path/to/your/exports \
   --out out
 ```
 
+## Architecture
+
+| Layer | Role |
+| --- | --- |
+| `packages/core` | Typed reconciliation engine, model schema, diagnostics (Vitest) |
+| `skills/reconstruct-value-stream` | Deterministic pipeline scripts + orchestration skill |
+| `agents/` | LLM agent prompts (judgment only) |
+| `packages/dashboard` | Static HTML render + token-gated localhost server |
+| `verticals/` | Per-vertical stage order and cardinality rules |
+| `examples/` | Synthetic multi-source datasets for demo and pressure tests |
+
+Runs are stateless. The durable artifact is `model.json`. The dashboard and static render read only the model, never raw sources.
+
 ## The dashboard
 
-`npm run dashboard` serves the model on `127.0.0.1` behind a token gate — the URL it prints
+`pnpm run dashboard` serves the model on `127.0.0.1` behind a token gate. The URL it prints
 carries a `?token=` you need to get past the gate, and it never binds a public interface.
 
 Inside is an **interactive graph explorer** — the value stream as a pannable, zoomable map:
@@ -151,20 +169,6 @@ order, and the cardinality rules that power the over-merge guard. Ships with con
 implementation, a vehicle service bay, a dental practice, enterprise B2B, and a generic
 fallback. A dentist's treatment bay and a B2B onboarding flow share primitives and differ only
 in configuration.
-
-## Project layout
-
-```
-packages/core/                 reconciliation engine, model schema, diagnostics (typed + tested)
-packages/dashboard/            static render + token-gated localhost server
-skills/
-  reconstruct-value-stream/    the pipeline: SKILL.md + deterministic scripts
-  value-stream-dashboard/      launch the local dashboard
-agents/                        the LLM agents, one Markdown prompt each
-verticals/                     per-vertical stage + cardinality configs
-examples/                      synthetic multi-source datasets
-docs/specs/                    the locked design documents
-```
 
 ## Status
 

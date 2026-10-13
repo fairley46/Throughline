@@ -48,7 +48,7 @@ throughline/
         index.ts
         __tests__/
           reconcile.test.ts    # OVER-MERGE GUARD regression test (the required one)
-          diagnostics.test.ts
+          pressure.test.ts     # multi-scale pressure test (dental → SMB → enterprise)
     dashboard/                 # the render
       views.mjs                # SHARED, environment-agnostic view builders (one source
                                #   of truth). Pure (model)->html string fns: LEDGER, STAGE,

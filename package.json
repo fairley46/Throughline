@@ -3,7 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "description": "Reconstruct an end-to-end business value stream from multi-source data and render it (working name).",
+  "description": "Reconstruct an end-to-end business value stream from multi-source data and render it as an interactive local dashboard.",
+  "packageManager": "pnpm@10.33.4",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "build": "tsc -b packages/core",
     "test": "vitest run",
