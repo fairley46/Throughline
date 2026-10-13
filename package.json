@@ -1,6 +1,6 @@
 {
   "name": "throughline",
-  "version": "0.0.0",
+  "version": "1.2.0",
   "private": true,
   "type": "module",
   "description": "Reconstruct an end-to-end business value stream from multi-source data and render it as an interactive local dashboard.",
