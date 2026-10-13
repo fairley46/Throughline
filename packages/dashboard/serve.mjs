@@ -142,7 +142,7 @@ const server = createServer((req, res) => {
         res,
         404,
         'application/json',
-        JSON.stringify({ error: `No model found at ${MODEL_PATH}. Run \`npm run demo\` first.` }),
+        JSON.stringify({ error: `No model found at ${MODEL_PATH}. Run \`pnpm run demo\` first.` }),
       );
       return;
     }
